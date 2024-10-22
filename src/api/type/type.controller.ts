@@ -19,7 +19,7 @@ import {
 import { TypeService } from "./type.service";
 import { CreateTypeDto } from "./dto/create-type.dto";
 import { UpdateTypeDto } from "./dto/update-type.dto";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../guard/admin/admin.guard";
 
 @Controller("type")
 export class TypeController {

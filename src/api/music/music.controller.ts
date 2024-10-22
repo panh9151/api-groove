@@ -13,7 +13,7 @@ import {
 import { MusicService } from "./music.service";
 import { CreateMusicDto } from "./dto/create-music.dto";
 import { UpdateMusicDto } from "./dto/update-music.dto";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../guard/admin/admin.guard";
 
 @Controller("music")
 export class MusicController {

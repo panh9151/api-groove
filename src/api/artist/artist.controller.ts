@@ -13,7 +13,7 @@ import {
 import { ArtistService } from "./artist.service";
 import { CreateArtistDto } from "./dto/create-artist.dto";
 import { UpdateArtistDto } from "./dto/update-artist.dto";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../guard/admin/admin.guard";
 import { FindQueryDto, ShowStatus } from "./dto/find-query.dto";
 
 @Controller("artist")

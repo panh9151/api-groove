@@ -10,7 +10,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { CloudinaryService } from "src/cloudinary/cloudinary.service";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../../guard/admin/admin.guard";
 import { DeleteDto } from "./dto/delete.dto";
 
 @Controller("upload-image")

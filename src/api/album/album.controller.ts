@@ -13,7 +13,7 @@ import {
 import { AlbumService } from "./album.service";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 import { UpdateAlbumDto } from "./dto/update-album.dto";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../guard/admin/admin.guard";
 
 @Controller("album")
 export class AlbumController {
