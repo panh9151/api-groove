@@ -1,9 +1,9 @@
+import { Album } from "./../../api-entity/Album.entity";
+import { Artist } from "./../../api-entity/Artist.entity";
+import { Music } from "./../../api-entity/Music.entity";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Artist } from "src/api-entity/Artist.entity";
-import { Album } from "src/api-entity/Album.entity";
-import { Music } from "src/api-entity/Music.entity";
 
 @Injectable()
 export class SearchService {

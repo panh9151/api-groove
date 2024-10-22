@@ -1,9 +1,9 @@
+import { FavoriteMusic } from "./../../api-entity/FavoriteMusic.entity";
+import { Music } from "./../../api-entity/Music.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateFavoriteMusicDto } from "./dto/favorite-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Music } from "src/api-entity/Music.entity";
-import { FavoriteMusic } from "src/api-entity/FavoriteMusic.entity";
 
 @Injectable()
 export class FavoriteMusicService {

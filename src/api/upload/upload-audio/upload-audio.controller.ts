@@ -1,3 +1,4 @@
+import { CloudinaryService } from "./../../../cloudinary/cloudinary.service";
 import {
   BadRequestException,
   Body,
@@ -9,7 +10,6 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { CloudinaryService } from "src/cloudinary/cloudinary.service";
 import { AdminGuard } from "../../../guard/admin/admin.guard";
 import { DeleteDto } from "./dto/delete.dto";
 

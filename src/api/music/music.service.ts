@@ -1,3 +1,8 @@
+import { Type } from "./../../api-entity/Type.entity";
+import { Artist } from "./../../api-entity/Artist.entity";
+import { MusicTypeDetail } from "./../../api-entity/MusicTypeDetail.entity";
+import { MusicArtist } from "./../../api-entity/MusicArtist.entity";
+import { Lyrics } from "./../../api-entity/Lyrics.entity";
 import {
   ConflictException,
   HttpException,
@@ -10,11 +15,6 @@ import { UpdateMusicDto } from "./dto/update-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Music } from "../../api-entity/Music.entity";
-import { Lyrics } from "src/api-entity/Lyrics.entity";
-import { MusicTypeDetail } from "src/api-entity/MusicTypeDetail.entity";
-import { MusicArtist } from "src/api-entity/MusicArtist.entity";
-import { Artist } from "src/api-entity/Artist.entity";
-import { Type } from "src/api-entity/Type.entity";
 
 @Injectable()
 export class MusicService {

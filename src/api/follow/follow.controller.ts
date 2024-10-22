@@ -13,7 +13,7 @@ import {
 import { FollowService } from "./follow.service";
 import { CreateFollowDto } from "./dto/create-follow.dto";
 import { UpdateFollowDto } from "./dto/update-follow.dto";
-import { UserGuard } from "src/guard/user/user.guard";
+import { UserGuard } from "../../guard/user/user.guard";
 
 @Controller("follow")
 export class FollowController {

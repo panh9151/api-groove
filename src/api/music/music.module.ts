@@ -1,13 +1,13 @@
+import { MusicArtist } from "./../../api-entity/MusicArtist.entity";
+import { Type } from "./../../api-entity/Type.entity";
+import { Artist } from "./../../api-entity/Artist.entity";
+import { MusicTypeDetail } from "./../../api-entity/MusicTypeDetail.entity";
+import { Lyrics } from "./../../api-entity/Lyrics.entity";
+import { Music } from "./../../api-entity/Music.entity";
 import { Module } from "@nestjs/common";
 import { MusicService } from "./music.service";
 import { MusicController } from "./music.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Music } from "src/api-entity/Music.entity";
-import { Lyrics } from "src/api-entity/Lyrics.entity";
-import { MusicArtist } from "src/api-entity/MusicArtist.entity";
-import { MusicTypeDetail } from "src/api-entity/MusicTypeDetail.entity";
-import { Type } from "src/api-entity/Type.entity";
-import { Artist } from "src/api-entity/Artist.entity";
 
 @Module({
   imports: [

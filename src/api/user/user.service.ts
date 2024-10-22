@@ -1,9 +1,9 @@
+import { User } from "./../../api-entity/User.entity";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "src/api-entity/User.entity";
 
 @Injectable()
 export class UserService {

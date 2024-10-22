@@ -1,6 +1,6 @@
+import { User } from "./../../../api-entity/User.entity";
 import { Entity, PrimaryColumn, ManyToOne } from "typeorm";
 import { ArtistEntity } from "./artist.entity";
-import { User } from "src/api-entity/User.entity";
 
 export enum ShowStatus {
   HIDDEN = 0,

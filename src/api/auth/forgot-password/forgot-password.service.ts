@@ -1,9 +1,9 @@
+import { User } from "./../../../api-entity/User.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { MailerService } from "@nestjs-modules/mailer";
 import * as crypto from "crypto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "src/api-entity/User.entity";
 
 @Injectable()
 export class ForgotPasswordService {

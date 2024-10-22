@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { FavoriteAlbumService } from "./favorite-album.service";
 import { CreateFavoriteAlbumDto } from "./dto/favorite-album.dto";
-import { UserGuard } from "src/guard/user/user.guard";
+import { UserGuard } from "../../guard/user/user.guard";
 
 @Controller("favorite-album")
 export class FavoriteAlbumController {

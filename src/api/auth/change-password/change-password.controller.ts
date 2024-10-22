@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { ChangePasswordService } from "./change-password.service";
 import { ChangePasswordDto } from "./dto/change-password.dto";
-import { UserGuard } from "src/guard/user/user.guard";
+import { UserGuard } from "../../../guard/user/user.guard";
 import * as bcrypt from "bcryptjs";
 
 @Controller("change-password")

@@ -1,9 +1,9 @@
+import { MusicHistory } from "./../../api-entity/MusicHistory.entity";
+import { Music } from "./../../api-entity/Music.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateMusicHistoryDto } from "./dto/create-music-history.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MusicHistory } from "src/api-entity/MusicHistory.entity";
 import { Repository } from "typeorm";
-import { Music } from "src/api-entity/Music.entity";
 
 @Injectable()
 export class MusicHistoryService {

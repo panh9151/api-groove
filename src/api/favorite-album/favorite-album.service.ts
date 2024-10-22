@@ -1,9 +1,9 @@
+import { Album } from "./../../api-entity/Album.entity";
+import { FavoriteAlbumDetail } from "./../../api-entity/FavoriteAlbumDetail.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateFavoriteAlbumDto } from "./dto/favorite-album.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Album } from "src/api-entity/Album.entity";
 import { Repository } from "typeorm";
-import { FavoriteAlbumDetail } from "src/api-entity/FavoriteAlbumDetail.entity";
 
 @Injectable()
 export class FavoriteAlbumService {

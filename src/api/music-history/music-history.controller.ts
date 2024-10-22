@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { MusicHistoryService } from "./music-history.service";
 import { CreateMusicHistoryDto } from "./dto/create-music-history.dto";
-import { UserGuard } from "src/guard/user/user.guard";
+import { UserGuard } from "../../guard/user/user.guard";
 
 @Controller("music-history")
 export class MusicHistoryController {

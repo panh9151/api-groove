@@ -1,7 +1,7 @@
+import { Music } from "./../../api-entity/Music.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { Music } from "src/api-entity/Music.entity";
 
 @Injectable()
 export class RankingService {

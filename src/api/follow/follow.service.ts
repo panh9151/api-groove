@@ -1,3 +1,4 @@
+import { Artist } from "./../../api-entity/Artist.entity";
 import {
   BadRequestException,
   ConflictException,
@@ -8,9 +9,8 @@ import {
 import { CreateFollowDto } from "./dto/create-follow.dto";
 import { UpdateFollowDto } from "./dto/update-follow.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Follow } from "src/api-entity/Follow.entity";
 import { Repository } from "typeorm";
-import { Artist } from "src/api-entity/Artist.entity";
+import { Follow } from "../artist/entities/follow.entity";
 
 @Injectable()
 export class FollowService {

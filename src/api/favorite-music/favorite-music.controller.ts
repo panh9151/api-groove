@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { FavoriteMusicService } from "./favorite-music.service";
 import { CreateFavoriteMusicDto } from "./dto/favorite-music.dto";
-import { UserGuard } from "src/guard/user/user.guard";
+import { UserGuard } from "../../guard/user/user.guard";
 
 @Controller("favorite-music")
 export class FavoriteMusicController {

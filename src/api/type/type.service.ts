@@ -1,7 +1,6 @@
+import { Type } from "./../../api-entity/Type.entity";
 import {
   ConflictException,
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
@@ -9,8 +8,6 @@ import { CreateTypeDto } from "./dto/create-type.dto";
 import { UpdateTypeDto } from "./dto/update-type.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { AuthUser } from "src/middleware/logger-middleware/entities/auth-user.entity";
-import { Type } from "src/api-entity/Type.entity";
 
 @Injectable()
 export class TypeService {

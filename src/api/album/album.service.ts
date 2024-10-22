@@ -1,12 +1,12 @@
+import { MusicAlbum } from "./../../api-entity/MusicAlbum.entity";
+import { Artist } from "./../../api-entity/Artist.entity";
+import { Music } from "./../../api-entity/Music.entity";
+import { Album } from "./../../api-entity/Album.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 import { UpdateAlbumDto } from "./dto/update-album.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Album } from "src/api-entity/Album.entity";
-import { Music } from "src/api-entity/Music.entity";
-import { Artist } from "src/api-entity/Artist.entity";
-import { MusicAlbum } from "src/api-entity/MusicAlbum.entity";
 
 @Injectable()
 export class AlbumService {
