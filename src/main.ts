@@ -1,20 +1,16 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
-import * as cors from "cors";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Sử dụng thư viện cors để cấu hình chi tiết
-  app.use(
-    cors({
-      origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
-      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization", "token"], // Các header mà bạn sử dụng
-      // credentials: true, // Uncomment nếu cần bật credentials
-    })
-  );
+  app.enableCors({
+    origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "token"], // Các header mà bạn sử dụng
+    // credentials: true, // Uncomment nếu cần bật credentials
+  });
 
   // Sử dụng ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
