@@ -8,7 +8,7 @@ async function bootstrap() {
   // app.enableCors();
   app.enableCors({
     origin: "*", // Cho phép mọi nguồn truy cập
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTION"], // Các phương thức được phép
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Các phương thức được phép
     allowedHeaders: ["Content-Type", "Authorization", "token"], // Cho phép mọi header
     credentials: true, // Nếu cần thiết
   });
