@@ -4,18 +4,14 @@ import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.enableCors({
-    origin: "*",
-    // origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "token"], // Các header mà bạn sử dụng
-    // credentials: true, // Uncomment nếu cần bật credentials
-  });
-
-  // Sử dụng ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
-
-  await app.listen(4000);
+  // app.enableCors();
+  app.enableCors({
+    origin: "*", // Cho phép mọi nguồn truy cập
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Các phương thức được phép
+    allowedHeaders: "*", // Cho phép mọi header
+    // credentials: true, // Nếu cần thiết
+  });
+  await app.listen(3000);
 }
 bootstrap();
