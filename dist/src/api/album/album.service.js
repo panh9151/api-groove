@@ -13,13 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlbumService = void 0;
+const MusicAlbum_entity_1 = require("./../../api-entity/MusicAlbum.entity");
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
+const Music_entity_1 = require("./../../api-entity/Music.entity");
+const Album_entity_1 = require("./../../api-entity/Album.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const Album_entity_1 = require("../../api-entity/Album.entity");
-const Music_entity_1 = require("../../api-entity/Music.entity");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
-const MusicAlbum_entity_1 = require("../../api-entity/MusicAlbum.entity");
 let AlbumService = class AlbumService {
     constructor(albumRepo, musicRepo, artistRepo, musicAlbumRepo) {
         this.albumRepo = albumRepo;

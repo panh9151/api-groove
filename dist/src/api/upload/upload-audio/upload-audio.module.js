@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadAudioModule = void 0;
+const cloudinary_module_1 = require("./../../../cloudinary/cloudinary.module");
 const common_1 = require("@nestjs/common");
 const upload_audio_controller_1 = require("./upload-audio.controller");
-const cloudinary_module_1 = require("../../../cloudinary/cloudinary.module");
 let UploadAudioModule = class UploadAudioModule {
 };
 exports.UploadAudioModule = UploadAudioModule;

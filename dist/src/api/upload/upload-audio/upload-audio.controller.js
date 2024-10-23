@@ -13,9 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadAudioController = void 0;
+const cloudinary_service_1 = require("./../../../cloudinary/cloudinary.service");
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
-const cloudinary_service_1 = require("../../../cloudinary/cloudinary.service");
 const admin_guard_1 = require("../../../guard/admin/admin.guard");
 const delete_dto_1 = require("./dto/delete.dto");
 let UploadAudioController = class UploadAudioController {

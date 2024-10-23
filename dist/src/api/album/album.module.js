@@ -7,14 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlbumModule = void 0;
+const MusicAlbum_entity_1 = require("./../../api-entity/MusicAlbum.entity");
+const Music_entity_1 = require("./../../api-entity/Music.entity");
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
+const Album_entity_1 = require("./../../api-entity/Album.entity");
 const common_1 = require("@nestjs/common");
 const album_service_1 = require("./album.service");
 const album_controller_1 = require("./album.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Album_entity_1 = require("../../api-entity/Album.entity");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
-const Music_entity_1 = require("../../api-entity/Music.entity");
-const MusicAlbum_entity_1 = require("../../api-entity/MusicAlbum.entity");
 let AlbumModule = class AlbumModule {
 };
 exports.AlbumModule = AlbumModule;

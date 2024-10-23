@@ -7,11 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingModule = void 0;
+const Music_entity_1 = require("./../../api-entity/Music.entity");
 const common_1 = require("@nestjs/common");
 const ranking_service_1 = require("./ranking.service");
 const ranking_controller_1 = require("./ranking.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Music_entity_1 = require("../../api-entity/Music.entity");
 let RankingModule = class RankingModule {
 };
 exports.RankingModule = RankingModule;

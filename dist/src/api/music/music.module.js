@@ -7,16 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MusicModule = void 0;
+const MusicArtist_entity_1 = require("./../../api-entity/MusicArtist.entity");
+const Type_entity_1 = require("./../../api-entity/Type.entity");
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
+const MusicTypeDetail_entity_1 = require("./../../api-entity/MusicTypeDetail.entity");
+const Lyrics_entity_1 = require("./../../api-entity/Lyrics.entity");
+const Music_entity_1 = require("./../../api-entity/Music.entity");
 const common_1 = require("@nestjs/common");
 const music_service_1 = require("./music.service");
 const music_controller_1 = require("./music.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Music_entity_1 = require("../../api-entity/Music.entity");
-const Lyrics_entity_1 = require("../../api-entity/Lyrics.entity");
-const MusicArtist_entity_1 = require("../../api-entity/MusicArtist.entity");
-const MusicTypeDetail_entity_1 = require("../../api-entity/MusicTypeDetail.entity");
-const Type_entity_1 = require("../../api-entity/Type.entity");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
 let MusicModule = class MusicModule {
 };
 exports.MusicModule = MusicModule;

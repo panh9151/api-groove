@@ -7,13 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchModule = void 0;
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
+const Album_entity_1 = require("./../../api-entity/Album.entity");
+const Music_entity_1 = require("./../../api-entity/Music.entity");
 const common_1 = require("@nestjs/common");
 const search_service_1 = require("./search.service");
 const search_controller_1 = require("./search.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Album_entity_1 = require("../../api-entity/Album.entity");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
-const Music_entity_1 = require("../../api-entity/Music.entity");
 let SearchModule = class SearchModule {
 };
 exports.SearchModule = SearchModule;

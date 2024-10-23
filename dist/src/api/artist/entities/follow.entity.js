@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Follow = exports.ShowStatus = void 0;
+const User_entity_1 = require("./../../../api-entity/User.entity");
 const typeorm_1 = require("typeorm");
 const artist_entity_1 = require("./artist.entity");
-const User_entity_1 = require("../../../api-entity/User.entity");
 var ShowStatus;
 (function (ShowStatus) {
     ShowStatus[ShowStatus["HIDDEN"] = 0] = "HIDDEN";

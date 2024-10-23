@@ -13,11 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FavoriteAlbumService = void 0;
+const Album_entity_1 = require("./../../api-entity/Album.entity");
+const FavoriteAlbumDetail_entity_1 = require("./../../api-entity/FavoriteAlbumDetail.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const Album_entity_1 = require("../../api-entity/Album.entity");
 const typeorm_2 = require("typeorm");
-const FavoriteAlbumDetail_entity_1 = require("../../api-entity/FavoriteAlbumDetail.entity");
 let FavoriteAlbumService = class FavoriteAlbumService {
     constructor(albumRepo, favoriteRepo) {
         this.albumRepo = albumRepo;

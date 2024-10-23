@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadImageModule = void 0;
+const cloudinary_module_1 = require("./../../../cloudinary/cloudinary.module");
 const common_1 = require("@nestjs/common");
 const upload_image_controller_1 = require("./upload-image.controller");
-const cloudinary_module_1 = require("../../../cloudinary/cloudinary.module");
 let UploadImageModule = class UploadImageModule {
 };
 exports.UploadImageModule = UploadImageModule;

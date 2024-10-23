@@ -13,11 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FollowService = void 0;
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const Follow_entity_1 = require("../../api-entity/Follow.entity");
 const typeorm_2 = require("typeorm");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
+const follow_entity_1 = require("../artist/entities/follow.entity");
 let FollowService = class FollowService {
     constructor(followRepo, artistRepo) {
         this.followRepo = followRepo;
@@ -100,7 +100,7 @@ let FollowService = class FollowService {
 exports.FollowService = FollowService;
 exports.FollowService = FollowService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(Follow_entity_1.Follow)),
+    __param(0, (0, typeorm_1.InjectRepository)(follow_entity_1.Follow)),
     __param(1, (0, typeorm_1.InjectRepository)(Artist_entity_1.Artist)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository])

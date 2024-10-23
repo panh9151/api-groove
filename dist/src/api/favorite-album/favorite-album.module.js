@@ -7,12 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FavoriteAlbumModule = void 0;
+const Album_entity_1 = require("./../../api-entity/Album.entity");
+const FavoriteAlbumDetail_entity_1 = require("./../../api-entity/FavoriteAlbumDetail.entity");
 const common_1 = require("@nestjs/common");
 const favorite_album_service_1 = require("./favorite-album.service");
 const favorite_album_controller_1 = require("./favorite-album.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Album_entity_1 = require("../../api-entity/Album.entity");
-const FavoriteAlbumDetail_entity_1 = require("../../api-entity/FavoriteAlbumDetail.entity");
 let FavoriteAlbumModule = class FavoriteAlbumModule {
 };
 exports.FavoriteAlbumModule = FavoriteAlbumModule;

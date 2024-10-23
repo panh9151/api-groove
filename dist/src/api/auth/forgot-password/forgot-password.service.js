@@ -13,12 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForgotPasswordService = void 0;
+const User_entity_1 = require("./../../../api-entity/User.entity");
 const common_1 = require("@nestjs/common");
 const mailer_1 = require("@nestjs-modules/mailer");
 const crypto = require("crypto");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const User_entity_1 = require("../../../api-entity/User.entity");
 let ForgotPasswordService = class ForgotPasswordService {
     constructor(mailerService, userRepository) {
         this.mailerService = mailerService;

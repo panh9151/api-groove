@@ -7,12 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FollowModule = void 0;
+const Artist_entity_1 = require("./../../api-entity/Artist.entity");
+const Follow_entity_1 = require("./../../api-entity/Follow.entity");
 const common_1 = require("@nestjs/common");
 const follow_service_1 = require("./follow.service");
 const follow_controller_1 = require("./follow.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Follow_entity_1 = require("../../api-entity/Follow.entity");
-const Artist_entity_1 = require("../../api-entity/Artist.entity");
 let FollowModule = class FollowModule {
 };
 exports.FollowModule = FollowModule;
