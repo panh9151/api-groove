@@ -9,7 +9,6 @@ async function bootstrap() {
             origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
             methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization", "token"],
-            credentials: true,
         },
     });
     app.useGlobalPipes(new common_1.ValidationPipe());

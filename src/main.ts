@@ -8,7 +8,7 @@ async function bootstrap() {
       origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
       methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization", "token"], // Thêm các header mà bạn đang sử dụng
-      credentials: true,
+      // credentials: true,
     },
   });
   // app.enableCors();
