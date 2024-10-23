@@ -18,18 +18,18 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { UploadAudioModule } from "./api/upload/upload-audio/upload-audio.module";
 import { ChangePasswordModule } from "./api/auth/change-password/change-password.module";
 import { VerifyEmailModule } from "./api/auth/verify-email/verify-email.module";
-import { ResetPasswordModule } from './api/auth/reset-password/reset-password.module';
-import { RegisterModule } from './api/auth/register/register.module';
-import { UpdateInforModule } from './api/auth/update-infor/update-infor.module';
-import { AlbumModule } from './api/album/album.module';
-import { ArtistModule } from './api/artist/artist.module';
-import { FavoriteAlbumModule } from './api/favorite-album/favorite-album.module';
-import { FavoriteMusicModule } from './api/favorite-music/favorite-music.module';
-import { FollowModule } from './api/follow/follow.module';
-import { MusicHistoryModule } from './api/music-history/music-history.module';
-import { PlaylistModule } from './api/playlist/playlist.module';
-import { RankingModule } from './api/ranking/ranking.module';
-import { SearchModule } from './api/search/search.module';
+import { ResetPasswordModule } from "./api/auth/reset-password/reset-password.module";
+import { RegisterModule } from "./api/auth/register/register.module";
+import { UpdateInforModule } from "./api/auth/update-infor/update-infor.module";
+import { AlbumModule } from "./api/album/album.module";
+import { ArtistModule } from "./api/artist/artist.module";
+import { FavoriteAlbumModule } from "./api/favorite-album/favorite-album.module";
+import { FavoriteMusicModule } from "./api/favorite-music/favorite-music.module";
+import { FollowModule } from "./api/follow/follow.module";
+import { MusicHistoryModule } from "./api/music-history/music-history.module";
+import { PlaylistModule } from "./api/playlist/playlist.module";
+import { RankingModule } from "./api/ranking/ranking.module";
+import { SearchModule } from "./api/search/search.module";
 
 @Module({
   imports: [
