@@ -277,7 +277,7 @@ export class MusicService {
       }
     });
 
-    return musics;
+    return { data: musics };
   }
 
   async findOne(id: string, req: any) {
