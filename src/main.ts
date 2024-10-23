@@ -11,7 +11,7 @@ async function bootstrap() {
     origin: ["http://localhost:3000", "http://localhost:3001"], // Cho phép nguồn truy cập
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Các phương thức được phép
     allowedHeaders: ["Content-Type", "Authorization", "token"], // Cho phép header
-    // credentials: true, // Nếu cần thiết
+    credentials: true, // Nếu cần thiết
   });
   await app.listen(3000);
 }
