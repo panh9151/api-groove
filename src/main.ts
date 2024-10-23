@@ -7,12 +7,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   // app.enableCors();
-  app.enableCors({
-    origin: ["http://localhost:3000", "http://localhost:3001"], // Cho phép nguồn truy cập
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Các phương thức được phép
-    allowedHeaders: ["Content-Type", "Authorization", "token"], // Cho phép header
-    credentials: true, // Nếu cần thiết
-  });
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
