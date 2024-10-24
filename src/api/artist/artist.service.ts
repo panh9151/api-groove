@@ -42,12 +42,12 @@ export class ArtistService {
       .createQueryBuilder("artist")
       .leftJoin(Follow, "f", "artist.id_artist = f.id_artist")
       .select([
-        "artist.id_artist",
-        "artist.name",
-        "artist.slug",
-        "artist.url_cover",
-        "artist.created_at",
-        "artist.last_update",
+        "artist.id_artist as id_artist",
+        "artist.name as name",
+        "artist.slug as slug",
+        "artist.url_cover as url_cover",
+        "artist.created_at as created_at",
+        "artist.last_update as last_update",
         "COUNT(f.id_user) AS followers",
       ]);
 
