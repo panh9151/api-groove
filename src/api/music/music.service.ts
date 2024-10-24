@@ -381,7 +381,7 @@ export class MusicService {
       music.lyrics = [];
     }
 
-    return music;
+    return { data: music };
   }
 
   async update(id: string, body: UpdateMusicDto) {
