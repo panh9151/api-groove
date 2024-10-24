@@ -381,6 +381,19 @@ export class MusicService {
       music.lyrics = [];
     }
 
+    function isEmptyData(data) {
+      return Object.values(data).every(
+        (value) =>
+          value === null ||
+          value === undefined ||
+          (Array.isArray(value) && value.length === 0)
+      );
+    }
+
+    if (isEmptyData(music)) {
+      throw new NotFoundException("Music not found");
+    }
+
     return { data: music };
   }
 
