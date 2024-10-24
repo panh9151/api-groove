@@ -37,5 +37,5 @@ export class MusicHistory {
   play_duration: number;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
-  created_at: Date;
+  created_at: string;
 }

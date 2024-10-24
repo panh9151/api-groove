@@ -9,7 +9,6 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 export class RegisterDto {
-  @IsUUID()
   @IsOptional()
   id_user: string = uuidv4();
 

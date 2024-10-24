@@ -18,13 +18,13 @@ export class ArtistEntity {
   slug: string;
 
   @Column()
-  url_cover: Date;
+  url_cover: string;
 
   @Column()
-  last_update: Date;
+  last_update: string;
 
   @Column()
-  created_at: Date;
+  created_at: string;
 
   @Column({ type: "enum", enum: ShowStatus, default: ShowStatus.VISIBLE })
   is_show: ShowStatus;

@@ -35,5 +35,5 @@ export class FavoriteMusic {
     default: () => "CURRENT_TIMESTAMP",
     onUpdate: "CURRENT_TIMESTAMP",
   })
-  last_update: Date;
+  last_update: string;
 }

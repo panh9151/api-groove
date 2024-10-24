@@ -27,16 +27,16 @@ export class AuthUser {
   url_avatar: string;
 
   @Column()
-  birthday: Date;
+  birthday: string;
 
   @Column()
   country: string;
 
   @Column()
-  created_at: Date;
+  created_at: string;
 
   @Column()
-  last_update: Date;
+  last_update: string;
 
   @Column()
   is_banned: 0 | 1;

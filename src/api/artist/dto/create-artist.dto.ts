@@ -8,7 +8,6 @@ export enum ShowStatus {
 
 export class CreateArtistDto {
   @IsString()
-  @IsUUID()
   @IsOptional()
   id_artist: string = uuidv4();
 
@@ -22,7 +21,7 @@ export class CreateArtistDto {
   @IsOptional()
   @IsString()
   @IsUrl()
-  url_cover: Date;
+  url_cover: string;
 
   @IsOptional()
   @IsEnum(ShowStatus)

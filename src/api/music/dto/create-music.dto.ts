@@ -50,7 +50,7 @@ export class CreateMusicDto {
 
   @IsDate()
   @IsOptional()
-  release_date: Date;
+  release_date: string;
 
   @IsEnum(ShowStatus, { message: "is_show must be 0 or 1" })
   @IsOptional()

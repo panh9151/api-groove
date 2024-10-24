@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  IsUUID,
   ValidateNested,
 } from "class-validator";
 import { MusicALbum } from "./music-album.dto";

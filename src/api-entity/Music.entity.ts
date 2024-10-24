@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Album } from "./Album.entity";
 import { MusicAlbum } from "./MusicAlbum.entity";
 import { Lyrics } from "./Lyrics.entity";
+import { MusicPlaylistDetail } from "./MusicPlaylist.entity";
 
 @Entity("Music")
 export class Music {
@@ -43,13 +44,13 @@ export class Music {
   composer: string;
 
   @Column({ type: "date", nullable: true })
-  release_date: Date;
+  release_date: string;
 
   @CreateDateColumn({ type: "datetime" })
-  created_at: Date;
+  created_at: string;
 
   @UpdateDateColumn({ type: "datetime", onUpdate: "CURRENT_TIMESTAMP" })
-  last_update: Date;
+  last_update: string;
 
   @Column({ type: "tinyint", default: 1 })
   is_show: 0 | 1;
@@ -72,4 +73,7 @@ export class Music {
 
   @OneToMany(() => Lyrics, (lyrics) => lyrics.music)
   lyrics: Lyrics[];
+
+  // @OneToMany(() => MusicPlaylistDetail, (mpd) => mpd.music)
+  // playlists: MusicPlaylistDetail[];
 }

@@ -45,7 +45,7 @@ export class UpdateInforDto {
 
   @IsDate()
   @IsOptional()
-  birthday: Date;
+  birthday: string;
 
   @IsString()
   @IsOptional()

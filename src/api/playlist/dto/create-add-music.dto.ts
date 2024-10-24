@@ -1,10 +1,13 @@
 import { IsInt, IsOptional, IsString } from "class-validator";
 
-export class CreatePlaylistDto {
+export class CreateAddMusicDto {
   @IsString()
-  name: string;
+  id_music;
+
+  @IsString()
+  id_playlist;
 
   @IsInt()
   @IsOptional()
-  playlist_index: number;
+  index_order;
 }

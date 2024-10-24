@@ -28,7 +28,7 @@ export class UpdateInforEntity {
   gender: Gender;
 
   @Column()
-  birthday: Date;
+  birthday: string;
 
   @Column()
   country: string;

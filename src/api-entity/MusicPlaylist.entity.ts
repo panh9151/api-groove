@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryColumn, Column } from "typeorm";
+import { Entity, ManyToOne, PrimaryColumn, Column, JoinColumn } from "typeorm";
 import { Music } from "./Music.entity";
 import { Playlist } from "./Playlist.entity";
 
@@ -13,15 +13,11 @@ export class MusicPlaylistDetail {
   @Column({ type: "int", default: 0 })
   index_order: number;
 
-  @ManyToOne(() => Playlist, (playlist) => playlist.id_playlist, {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  })
+  @ManyToOne(() => Playlist, (playlist) => playlist.musics)
+  @JoinColumn({ name: "id_playlist" })
   playlist: Playlist;
 
-  @ManyToOne(() => Music, (music) => music.id_music, {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  })
+  @ManyToOne(() => Music, (music) => music.id_music)
+  @JoinColumn({ name: "id_music" })
   music: Music;
 }

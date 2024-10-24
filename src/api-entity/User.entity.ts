@@ -33,16 +33,16 @@ export class User {
   url_avatar: string;
 
   @Column({ type: "date", nullable: true })
-  birthday: Date;
+  birthday: string;
 
   @Column({ type: "varchar", length: 255, nullable: true })
   country: string;
 
   @CreateDateColumn({ type: "datetime" })
-  created_at: Date;
+  created_at: string;
 
   @UpdateDateColumn({ type: "datetime", onUpdate: "CURRENT_TIMESTAMP" })
-  last_update: Date;
+  last_update: string;
 
   @Column({ type: "tinyint", default: 0 })
   is_banned: 0 | 1;

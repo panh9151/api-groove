@@ -21,7 +21,7 @@ export class Type {
   slug: string;
 
   @CreateDateColumn({ type: "datetime" })
-  created_at: Date;
+  created_at: string;
 
   @Column({ type: "tinyint", default: 1 })
   is_show: 0 | 1;

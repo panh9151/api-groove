@@ -18,7 +18,7 @@ export class UpdateArtistDto {
   @IsOptional()
   @IsString()
   @IsUrl()
-  url_cover: Date;
+  url_cover: string;
 
   @IsOptional()
   @IsEnum(ShowStatus)

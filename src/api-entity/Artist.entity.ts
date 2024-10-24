@@ -23,10 +23,10 @@ export class Artist {
   url_cover: string;
 
   @CreateDateColumn({ type: "datetime" })
-  created_at: Date;
+  created_at: string;
 
   @UpdateDateColumn({ type: "datetime", onUpdate: "CURRENT_TIMESTAMP" })
-  last_update: Date;
+  last_update: string;
 
   @Column({ type: "tinyint", default: 1 })
   is_show: boolean;

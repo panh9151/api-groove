@@ -21,7 +21,7 @@ export class CreateTypeDto {
   // Created_at is optional and validated as Date
   @IsDate()
   @IsOptional()
-  created_at: Date;
+  created_at: string;
 
   // is_show defaults to 1 if not provided
   @IsIn([0, 1])

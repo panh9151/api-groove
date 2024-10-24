@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsDate, IsOptional } from "class-validator";
+import { IsString, IsInt, IsOptional, IsUUID } from "class-validator";
 
 export class MusicALbum {
   @IsString()
