@@ -30,6 +30,8 @@ import { MusicHistoryModule } from "./api/music-history/music-history.module";
 import { PlaylistModule } from "./api/playlist/playlist.module";
 import { RankingModule } from "./api/ranking/ranking.module";
 import { SearchModule } from "./api/search/search.module";
+import { NotificationModule } from './notification/notification.module';
+import { NotificationModule } from './api/notification/notification.module';
 
 @Module({
   imports: [
@@ -82,6 +84,7 @@ import { SearchModule } from "./api/search/search.module";
     PlaylistModule,
     RankingModule,
     SearchModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
