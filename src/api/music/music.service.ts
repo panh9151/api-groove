@@ -2,11 +2,8 @@ import { Type } from "./../../api-entity/Type.entity";
 import { Artist } from "./../../api-entity/Artist.entity";
 import { MusicTypeDetail } from "./../../api-entity/MusicTypeDetail.entity";
 import { MusicArtist } from "./../../api-entity/MusicArtist.entity";
-import { Lyrics } from "./../../api-entity/Lyrics.entity";
 import {
   ConflictException,
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
@@ -15,14 +12,13 @@ import { UpdateMusicDto } from "./dto/update-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Music } from "../../api-entity/Music.entity";
+import { Composer } from "../../api-entity/Composer.entity";
 
 @Injectable()
 export class MusicService {
   constructor(
     @InjectRepository(Music)
     private readonly musicRepository: Repository<Music>,
-    @InjectRepository(Lyrics)
-    private readonly lyricsRepository: Repository<Lyrics>,
     @InjectRepository(MusicArtist)
     private readonly musicArtistRepo: Repository<MusicArtist>,
     @InjectRepository(MusicTypeDetail)
@@ -30,7 +26,9 @@ export class MusicService {
     @InjectRepository(Artist)
     private readonly artistRepo: Repository<Artist>,
     @InjectRepository(Type)
-    private readonly typeRepo: Repository<Type>
+    private readonly typeRepo: Repository<Type>,
+    @InjectRepository(Composer)
+    private readonly composerRepo: Repository<Composer>
   ) {}
 
   async create(body: CreateMusicDto) {
@@ -44,6 +42,19 @@ export class MusicService {
 
       if (artistList.length !== body.artists.length) {
         throw new NotFoundException("Artists not found");
+      }
+    }
+
+    // Check existing composer
+    if (body.composer) {
+      const composer = await this.composerRepo
+        .createQueryBuilder("composer")
+        .select("composer.id_composer")
+        .andWhere("composer.composer = :composer", { composer: body.composer })
+        .getMany();
+
+      if (composer.length !== 1) {
+        throw new ConflictException("Composer not found");
       }
     }
 
@@ -81,7 +92,7 @@ export class MusicService {
       url_cover: body.url_cover,
       total_duration: body.total_duration,
       producer: body.producer,
-      composer: body.composer,
+      // composer: body.composer,
       release_date: body.release_date,
       is_show: body.is_show,
     });
@@ -112,20 +123,6 @@ export class MusicService {
       });
     }
 
-    // Add lyrics
-    if (body.lyrics && body.lyrics.length > 0) {
-      const lyricsToAdd = body.lyrics.map(async (lyric) => {
-        const newLyric = this.lyricsRepository.create({
-          id_music: saveMusic.id_music,
-          lyrics: lyric.lyrics,
-          start_time: lyric.start_time,
-          end_time: lyric.end_time,
-        });
-
-        await this.lyricsRepository.save(newLyric);
-      });
-    }
-
     return { newID: saveMusic.id_music };
   }
 
@@ -145,55 +142,13 @@ export class MusicService {
   ) {
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
-      .select([
-        "music.id_music as id_music",
-        "music.name as name",
-        "music.slug as slug",
-        "music.url_path as url_path",
-        "music.url_cover as url_cover",
-        "music.total_duration as total_duration",
-        "music.producer as producer",
-        "music.composer as composer",
-        "music.release_date as release_date",
-        "music.created_at as created_at",
-        "music.last_update as last_update",
-        "music.is_show as is_show",
-        "COUNT(DISTINCT mh.id_music_history) AS view",
-        "COUNT(DISTINCT fm.id_music) AS favorite",
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_artist', a.id_artist,
-          'name', a.name,
-          'slug', a.slug,
-          'url_cover', a.url_cover,
-          'created_at', a.created_at,
-          'last_update', a.last_update,
-          'is_show', a.is_show
-        ) SEPARATOR ','), ']'), '[]') AS artists`,
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_type', ty.id_type,
-          'name', ty.name,
-          'slug', ty.slug,
-          'created_at', ty.created_at,
-          'is_show', ty.is_show
-        ) SEPARATOR ','), ']'), '[]') AS types`,
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_lyrics', lyrics.id_lyrics, 
-          'lyrics', lyrics.lyrics,       
-          'start_time', lyrics.start_time,
-          'end_time', lyrics.end_time
-        ) SEPARATOR ','), ']'), '[]') AS lyrics`,
-      ])
-      .leftJoin("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
-      .leftJoin("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
-      .leftJoin("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
-      .leftJoin("mad.artist", "a") // Join bảng nghệ sĩ (artist)
-      .leftJoin("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
-      .leftJoin("mtd.type", "ty") // Join bảng thể loại (type)
-      .leftJoin("music.lyrics", "lyrics");
-    // .leftJoinAndSelect("music.lyrics", "lyrics"); // Join bảng thể loại (lyrics)
+      .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
+      .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
+      .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
+      .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
+      .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
+      .leftJoinAndSelect("mtd.type", "ty") // Join bảng thể loại (type)
+      .leftJoinAndSelect("music.composer", "composer");
 
     // Apply filters based on the parameters
     id_music && musicRepo.andWhere("music.id_music = :id_music", { id_music });
@@ -230,7 +185,7 @@ export class MusicService {
     offset && musicRepo.skip(offset);
 
     // Get data
-    const musics = await musicRepo.getRawMany();
+    const musics = await musicRepo.getMany();
     // return musics;
     // Parse types
     musics.map((music: any) => {
@@ -241,7 +196,6 @@ export class MusicService {
       // JSON
       music.types = JSON.parse(music.types);
       music.artists = JSON.parse(music.artists);
-      music.lyrics = JSON.parse(music.lyrics);
 
       // Check null Artist
       if (
@@ -263,17 +217,6 @@ export class MusicService {
         )
       ) {
         music.types = [];
-      }
-
-      // Check null Lyrics
-      if (
-        music.lyrics &&
-        music.lyrics.length === 1 &&
-        Object.values(music.lyrics[0]).every(
-          (value) => value === null || value === 0
-        )
-      ) {
-        music.lyrics = [];
       }
     });
 
@@ -316,13 +259,6 @@ export class MusicService {
           'created_at', ty.created_at,
           'is_show', ty.is_show
         ) SEPARATOR ','), ']'), '[]') AS types`,
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_lyrics', lyrics.id_lyrics, 
-          'lyrics', lyrics.lyrics,       
-          'start_time', lyrics.start_time,
-          'end_time', lyrics.end_time
-        ) SEPARATOR ','), ']'), '[]') AS lyrics`,
       ])
       .leftJoin("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
       .leftJoin("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
@@ -330,7 +266,6 @@ export class MusicService {
       .leftJoin("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoin("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
       .leftJoin("mtd.type", "ty") // Join bảng thể loại (type)
-      .leftJoin("music.lyrics", "lyrics")
       .andWhere("music.id_music = :id_music", { id_music: id });
     // Apply visible rows by role
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
@@ -346,7 +281,6 @@ export class MusicService {
     // JSON
     music.types = JSON.parse(music.types);
     music.artists = JSON.parse(music.artists);
-    music.lyrics = JSON.parse(music.lyrics);
 
     // Check null Artist
     if (
@@ -368,17 +302,6 @@ export class MusicService {
       )
     ) {
       music.types = [];
-    }
-
-    // Check null Lyrics
-    if (
-      music.lyrics &&
-      music.lyrics.length === 1 &&
-      Object.values(music.lyrics[0]).every(
-        (value) => value === null || value === 0
-      )
-    ) {
-      music.lyrics = [];
     }
 
     function isEmptyData(data) {
@@ -453,7 +376,7 @@ export class MusicService {
       url_cover: body.url_cover ?? music.url_cover,
       total_duration: body.total_duration ?? music.total_duration,
       producer: body.producer ?? music.producer,
-      composer: body.composer ?? music.composer,
+      // composer: body.composer ?? music.composer,
       release_date: body.release_date ?? music.release_date,
       is_show: body.is_show ?? music.is_show,
     });
@@ -481,21 +404,6 @@ export class MusicService {
         });
 
         await this.musicTypeRepo.save(newType);
-      });
-    }
-
-    // Update lyrics
-    if (body.lyrics) {
-      await this.lyricsRepository.delete({ id_music: id });
-      const lyricsToAdd = body.lyrics.map(async (lyric) => {
-        const newLyric = this.lyricsRepository.create({
-          id_music: id,
-          lyrics: lyric.lyrics,
-          start_time: lyric.start_time,
-          end_time: lyric.end_time,
-        });
-
-        await this.lyricsRepository.save(newLyric);
       });
     }
 

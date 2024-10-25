@@ -6,6 +6,9 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToMany,
+  OneToOne,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { MusicTypeDetail } from "./MusicTypeDetail.entity";
 import { MusicHistory } from "./MusicHistory.entity";
@@ -14,8 +17,8 @@ import { MusicArtist } from "./MusicArtist.entity";
 import { v4 as uuidv4 } from "uuid";
 import { Album } from "./Album.entity";
 import { MusicAlbum } from "./MusicAlbum.entity";
-import { Lyrics } from "./Lyrics.entity";
 import { MusicPlaylistDetail } from "./MusicPlaylist.entity";
+import { Composer } from "./Composer.entity";
 
 @Entity("Music")
 export class Music {
@@ -40,9 +43,6 @@ export class Music {
   @Column({ type: "varchar", length: 255, nullable: true })
   producer: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
-  composer: string;
-
   @Column({ type: "date", nullable: true })
   release_date: string;
 
@@ -56,6 +56,10 @@ export class Music {
   is_show: 0 | 1;
 
   // Relations
+  @ManyToOne(() => Composer, (composer) => composer.musics)
+  @JoinColumn({ name: "composer" })
+  composer: Composer;
+
   @OneToMany(() => MusicHistory, (musicHistory) => musicHistory.music)
   musicHistories: MusicHistory[];
 
@@ -70,9 +74,6 @@ export class Music {
 
   @OneToMany(() => MusicAlbum, (musicAlbum) => musicAlbum.music)
   musicAlbumDetail: MusicAlbum[];
-
-  @OneToMany(() => Lyrics, (lyrics) => lyrics.music)
-  lyrics: Lyrics[];
 
   // @OneToMany(() => MusicPlaylistDetail, (mpd) => mpd.music)
   // playlists: MusicPlaylistDetail[];

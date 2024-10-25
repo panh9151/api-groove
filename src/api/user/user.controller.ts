@@ -68,9 +68,9 @@ export class UserController {
     return this.userService.update(id, body);
   }
 
-  @UseGuards(AdminGuard)
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.userService.remove(id);
-  }
+  // @UseGuards(AdminGuard)
+  // @Delete(":id")
+  // remove(@Param("id") id: string) {
+  //   return this.userService.remove(id);
+  // }
 }

@@ -25,8 +25,7 @@ export class RankingService {
       .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
       .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
-      .leftJoinAndSelect("mtd.type", "ty") // Join bảng thể loại (type)
-      .leftJoinAndSelect("music.lyrics", "lyrics");
+      .leftJoinAndSelect("mtd.type", "ty"); // Join bảng thể loại (type)
 
     // Apply duration
     if (duration === "day") {

@@ -18,10 +18,9 @@ export class SearchService {
 
     let role = req?.user?.role === "admin" ? "admin" : "user";
 
-    // Search by lyrics, id_lyrics, music name/id_music
+    // Search by music name/id_music
     const musicRepo = this.musicRepo
       .createQueryBuilder("music")
-      .leftJoinAndSelect("music.lyrics", "lyrics")
       .leftJoinAndSelect("music.artists", "mad")
       .leftJoinAndSelect("mad.artist", "artist")
       .leftJoinAndSelect("music.types", "mtd")
@@ -29,9 +28,7 @@ export class SearchService {
       .andWhere(
         `
         (
-          (lyrics.lyrics LIKE CONCAT('%', '${search_text}', '%')
-          OR lyrics.id_lyrics = '${search_text}'
-          OR music.name LIKE CONCAT('%', '${search_text}', '%')
+          (music.name LIKE CONCAT('%', '${search_text}', '%')
           OR music.id_music = '${search_text}')
         )
         `

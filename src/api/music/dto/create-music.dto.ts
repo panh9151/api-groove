@@ -8,9 +8,7 @@ import {
   IsString,
   IsUrl,
   Length,
-  ValidateNested,
 } from "class-validator";
-import { LyricsDto } from "./lyrics.dto";
 
 export enum ShowStatus {
   HIDDEN = 0,
@@ -65,10 +63,4 @@ export class CreateMusicDto {
   @IsString({ each: true })
   @IsOptional()
   types = [];
-
-  @IsOptional()
-  @IsArray() // Kiểm tra rằng đây là một mảng
-  @ValidateNested({ each: true }) // Kiểm tra từng phần tử trong mảng
-  @Type(() => LyricsDto)
-  lyrics: LyricsDto[];
 }

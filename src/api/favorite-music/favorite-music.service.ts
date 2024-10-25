@@ -50,7 +50,6 @@ export class FavoriteMusicService {
       .leftJoinAndSelect("mad.artist", "artist")
       .leftJoinAndSelect("music.types", "mtd")
       .leftJoinAndSelect("mtd.type", "type")
-      .leftJoinAndSelect("music.lyrics", "lyrics")
       .andWhere("fa.id_user = :id_user", { id_user })
       .andWhere("music.is_show = 1");
 
