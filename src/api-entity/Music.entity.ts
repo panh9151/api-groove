@@ -5,8 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToMany,
-  OneToOne,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
@@ -15,9 +13,7 @@ import { MusicHistory } from "./MusicHistory.entity";
 import { FavoriteMusic } from "./FavoriteMusic.entity";
 import { MusicArtist } from "./MusicArtist.entity";
 import { v4 as uuidv4 } from "uuid";
-import { Album } from "./Album.entity";
 import { MusicAlbum } from "./MusicAlbum.entity";
-import { MusicPlaylistDetail } from "./MusicPlaylist.entity";
 import { Composer } from "./Composer.entity";
 
 @Entity("Music")

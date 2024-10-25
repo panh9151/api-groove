@@ -200,13 +200,13 @@ export class UserService {
     return { message: `Updated successfully` };
   }
 
-  async remove(id: string) {
-    const user = await this.userRepo.findOne({ where: { id_user: id } });
-    if (!user) {
-      throw new ConflictException("User not found");
-    }
+  // async remove(id: string) {
+  //   const user = await this.userRepo.findOne({ where: { id_user: id } });
+  //   if (!user) {
+  //     throw new ConflictException("User not found");
+  //   }
 
-    await this.userRepo.delete(id);
-    return { message: `Delete user successfully` };
-  }
+  //   await this.userRepo.delete(id);
+  //   return { message: `Delete user successfully` };
+  // }
 }

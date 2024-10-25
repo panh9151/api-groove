@@ -159,7 +159,7 @@ export class MusicService {
         producer: `%${producer}%`,
       });
     composer &&
-      musicRepo.andWhere("music.composer = :composer", {
+      musicRepo.andWhere("composer.id_composer = :composer", {
         composer: `%${composer}%`,
       });
     is_show &&
@@ -189,7 +189,7 @@ export class MusicService {
         ? music.favoriteMusics.length
         : null;
       music.vỉew = music.musicHistories ? music.musicHistories.length : null;
-      music.composer = music.id_composer ? music.id_composer : null;
+      music.composer = music?.id_composer?.name ? music.id_composer.name : null;
 
       delete music.musicHistories;
       delete music.favoriteMusics;
@@ -221,7 +221,7 @@ export class MusicService {
     if (!music) throw new NotFoundException("Music not found");
     music.favorite = music.favoriteMusics ? music.favoriteMusics.length : null;
     music.view = music.musicHistories ? music.musicHistories.length : null;
-    music.composer = music.id_composer ? music.id_composer : null;
+    music.composer = music?.id_composer?.name ? music.id_composer.name : null;
 
     delete music.musicHistories;
     delete music.favoriteMusics;
@@ -237,6 +237,21 @@ export class MusicService {
 
     if (!music) {
       throw new NotFoundException("Music not found");
+    }
+
+    // Check existing composer
+    if (body.composer) {
+      const composer = await this.composerRepo
+        .createQueryBuilder("composer")
+        .select("composer.id_composer")
+        .andWhere("composer.id_composer = :composer", {
+          composer: body.composer,
+        })
+        .getMany();
+
+      if (composer.length !== 1) {
+        throw new ConflictException("Composer not found");
+      }
     }
 
     // Check artists exist

@@ -30,7 +30,7 @@ export class UpdateInforService {
       where: { id_user: id },
     });
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found`);
+      throw new NotFoundException(`User not found`);
     }
 
     const updatedUser = this.updateInforRepository.merge(user, body);
