@@ -78,7 +78,7 @@ export class TypeService {
       .andWhere("type.id_type = :id_type", { id_type: id });
 
     // Apply visible rows by role
-    req.user.role !== "admin" && type.andWhere("type.is_show = 1", {});
+    req?.user?.role !== "admin" && type.andWhere("type.is_show = 1", {});
 
     const result = await type.getOne();
 
