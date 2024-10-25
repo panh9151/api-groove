@@ -34,10 +34,6 @@ export class CreateMusicDto {
   @IsOptional()
   url_cover: string;
 
-  @IsInt()
-  @IsOptional()
-  total_duration: number;
-
   @IsString()
   @IsOptional()
   producer: string;

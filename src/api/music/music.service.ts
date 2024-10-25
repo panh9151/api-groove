@@ -90,7 +90,6 @@ export class MusicService {
       slug: body.slug,
       url_path: body.url_path,
       url_cover: body.url_cover,
-      total_duration: body.total_duration,
       producer: body.producer,
       // composer: body.composer,
       release_date: body.release_date,
@@ -111,7 +110,7 @@ export class MusicService {
       });
     }
 
-    // // Add types
+    // Add types
     if (body.types && body.types.length > 0) {
       const typesToAdd = body.types.map(async (type) => {
         const newType = this.musicTypeRepo.create({
@@ -132,7 +131,6 @@ export class MusicService {
     id_music,
     name,
     slug,
-    total_duration,
     producer,
     composer,
     is_show,
@@ -154,10 +152,6 @@ export class MusicService {
     id_music && musicRepo.andWhere("music.id_music = :id_music", { id_music });
     name && musicRepo.andWhere("music.name = :name", { name });
     slug && musicRepo.andWhere("music.slug = :slug", { slug });
-    total_duration &&
-      musicRepo.andWhere("music.total_duration = :total_duration", {
-        total_duration: `%${total_duration}%`,
-      });
     producer &&
       musicRepo.andWhere("music.producer = :producer", {
         producer: `%${producer}%`,
@@ -232,7 +226,6 @@ export class MusicService {
         "music.slug as slug",
         "music.url_path as url_path",
         "music.url_cover as url_cover",
-        "music.total_duration as total_duration",
         "music.producer as producer",
         "music.composer as composer",
         "music.release_date as release_date",
@@ -374,7 +367,6 @@ export class MusicService {
       slug: body.slug ?? music.slug,
       url_path: body.url_path ?? music.url_path,
       url_cover: body.url_cover ?? music.url_cover,
-      total_duration: body.total_duration ?? music.total_duration,
       producer: body.producer ?? music.producer,
       // composer: body.composer ?? music.composer,
       release_date: body.release_date ?? music.release_date,

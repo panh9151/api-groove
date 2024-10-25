@@ -37,9 +37,6 @@ export class Music {
   @Column({ type: "varchar", length: 255, nullable: true })
   url_cover: string;
 
-  @Column({ type: "int", default: 0 })
-  total_duration: number;
-
   @Column({ type: "varchar", length: 255, nullable: true })
   producer: string;
 
