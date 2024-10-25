@@ -25,8 +25,9 @@ export class ForgotPasswordService {
     }
 
     // Get reset link
-    const resetLink =
-      `${req.protocol}://${req.get("host")}/reset-password/` + resetToken;
+    const resetLink = `http://localhost:3000/reset-password/` + resetToken;
+    // const resetLink =
+    //   `${req.protocol}://${req.get("host")}/reset-password/` + resetToken;
 
     // Send mail
     await this.mailerService.sendMail({
