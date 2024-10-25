@@ -50,7 +50,9 @@ export class MusicService {
       const composer = await this.composerRepo
         .createQueryBuilder("composer")
         .select("composer.id_composer")
-        .andWhere("composer.composer = :composer", { composer: body.composer })
+        .andWhere("composer.id_composer = :composer", {
+          composer: body.composer,
+        })
         .getMany();
 
       if (composer.length !== 1) {
@@ -91,7 +93,7 @@ export class MusicService {
       url_path: body.url_path,
       url_cover: body.url_cover,
       producer: body.producer,
-      // composer: body.composer,
+      composer: body.composer,
       release_date: body.release_date,
       is_show: body.is_show,
     });
@@ -146,7 +148,7 @@ export class MusicService {
       .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
       .leftJoinAndSelect("mtd.type", "ty") // Join bảng thể loại (type)
-      .leftJoinAndSelect("music.composer", "composer");
+      .leftJoinAndSelect("music.id_composer", "composer");
 
     // Apply filters based on the parameters
     id_music && musicRepo.andWhere("music.id_music = :id_music", { id_music });
@@ -179,39 +181,21 @@ export class MusicService {
     offset && musicRepo.skip(offset);
 
     // Get data
-    const musics = await musicRepo.getMany();
-    // return musics;
-    // Parse types
-    musics.map((music: any) => {
-      // View & Favorite
-      music.favorite = +music.favorite;
-      music.view = +music.view;
+    let musics: any[] = await musicRepo.getMany();
 
-      // JSON
-      music.types = JSON.parse(music.types);
-      music.artists = JSON.parse(music.artists);
+    //Parse data
+    musics = musics.map((music) => {
+      music.favorite = music.favoriteMusics
+        ? music.favoriteMusics.length
+        : null;
+      music.vỉew = music.musicHistories ? music.musicHistories.length : null;
+      music.composer = music.id_composer ? music.id_composer : null;
 
-      // Check null Artist
-      if (
-        music.artists &&
-        music.artists.length === 1 &&
-        Object.values(music.artists[0]).every(
-          (value) => value === null || value === 0
-        )
-      ) {
-        music.artists = [];
-      }
+      delete music.musicHistories;
+      delete music.favoriteMusics;
+      delete music.id_composer;
 
-      // Check null Type
-      if (
-        music.types &&
-        music.types.length === 1 &&
-        Object.values(music.types[0]).every(
-          (value) => value === null || value === 0
-        )
-      ) {
-        music.types = [];
-      }
+      return musics;
     });
 
     return { data: musics };
@@ -220,95 +204,28 @@ export class MusicService {
   async findOne(id: string, req: any) {
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
-      .select([
-        "music.id_music as id_music",
-        "music.name as name",
-        "music.slug as slug",
-        "music.url_path as url_path",
-        "music.url_cover as url_cover",
-        "music.producer as producer",
-        "music.composer as composer",
-        "music.release_date as release_date",
-        "music.created_at as created_at",
-        "music.last_update as last_update",
-        "music.is_show as is_show",
-        "COUNT(DISTINCT mh.id_music_history) AS view",
-        "COUNT(DISTINCT fm.id_music) AS favorite",
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_artist', a.id_artist,
-          'name', a.name,
-          'slug', a.slug,
-          'url_cover', a.url_cover,
-          'created_at', a.created_at,
-          'last_update', a.last_update,
-          'is_show', a.is_show
-        ) SEPARATOR ','), ']'), '[]') AS artists`,
-        `IFNULL(CONCAT('[', GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-          'id_type', ty.id_type,
-          'name', ty.name,
-          'slug', ty.slug,
-          'created_at', ty.created_at,
-          'is_show', ty.is_show
-        ) SEPARATOR ','), ']'), '[]') AS types`,
-      ])
-      .leftJoin("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
-      .leftJoin("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
-      .leftJoin("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
-      .leftJoin("mad.artist", "a") // Join bảng nghệ sĩ (artist)
-      .leftJoin("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
-      .leftJoin("mtd.type", "ty") // Join bảng thể loại (type)
+      .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
+      .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
+      .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
+      .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
+      .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
+      .leftJoinAndSelect("mtd.type", "ty") // Join bảng thể loại (type)
+      .leftJoinAndSelect("music.id_composer", "composer")
       .andWhere("music.id_music = :id_music", { id_music: id });
+
     // Apply visible rows by role
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
 
     // Get data
-    const music = await musicRepo.getRawOne();
-    // return musics;
-    // Parse types
-    // View & Favorite
-    music.favorite = +music.favorite;
-    music.view = +music.view;
+    const music: any = await musicRepo.getOne();
+    if (!music) throw new NotFoundException("Music not found");
+    music.favorite = music.favoriteMusics ? music.favoriteMusics.length : null;
+    music.view = music.musicHistories ? music.musicHistories.length : null;
+    music.composer = music.id_composer ? music.id_composer : null;
 
-    // JSON
-    music.types = JSON.parse(music.types);
-    music.artists = JSON.parse(music.artists);
-
-    // Check null Artist
-    if (
-      music.artists &&
-      music.artists.length === 1 &&
-      Object.values(music.artists[0]).every(
-        (value) => value === null || value === 0
-      )
-    ) {
-      music.artists = [];
-    }
-
-    // Check null Type
-    if (
-      music.types &&
-      music.types.length === 1 &&
-      Object.values(music.types[0]).every(
-        (value) => value === null || value === 0
-      )
-    ) {
-      music.types = [];
-    }
-
-    function isEmptyData(data) {
-      return Object.values(data).every(
-        (value) =>
-          value === null ||
-          value === undefined ||
-          (Array.isArray(value) && value.length === 0)
-      );
-    }
-
-    if (isEmptyData(music)) {
-      throw new NotFoundException("Music not found");
-    }
+    delete music.musicHistories;
+    delete music.favoriteMusics;
+    delete music.id_composer;
 
     return { data: music };
   }

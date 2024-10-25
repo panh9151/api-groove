@@ -52,10 +52,13 @@ export class Music {
   @Column({ type: "tinyint", default: 1 })
   is_show: 0 | 1;
 
+  @Column()
+  composer: string;
+
   // Relations
   @ManyToOne(() => Composer, (composer) => composer.musics)
   @JoinColumn({ name: "composer" })
-  composer: Composer;
+  id_composer: Composer;
 
   @OneToMany(() => MusicHistory, (musicHistory) => musicHistory.music)
   musicHistories: MusicHistory[];
