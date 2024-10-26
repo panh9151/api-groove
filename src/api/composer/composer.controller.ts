@@ -11,7 +11,7 @@ import {
 import { ComposerService } from "./composer.service";
 import { CreateComposerDto } from "./dto/create-composer.dto";
 import { UpdateComposerDto } from "./dto/update-composer.dto";
-import { AdminGuard } from "src/guard/admin/admin.guard";
+import { AdminGuard } from "../../guard/admin/admin.guard";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 @Controller("Composer")

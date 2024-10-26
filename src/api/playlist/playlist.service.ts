@@ -10,7 +10,7 @@ import { Playlist } from "../../api-entity/Playlist.entity";
 import { Repository } from "typeorm";
 import { DeletePlaylistDto } from "./dto/delete-playlist.dto";
 import { Music } from "../../api-entity/Music.entity";
-import { MusicPlaylistDetail } from "src/api-entity/MusicPlaylist.entity";
+import { MusicPlaylistDetail } from "../../api-entity/MusicPlaylist.entity";
 
 @Injectable()
 export class PlaylistService {
