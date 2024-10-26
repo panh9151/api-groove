@@ -69,7 +69,7 @@ export class UpdateMusicDto {
   @IsOptional()
   @ApiProperty({
     description: "Nhạc sĩ (Người sáng tác)",
-    example: "Bùi Công Nam",
+    example: "c0001",
     required: false,
   })
   composer: string;
