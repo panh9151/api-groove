@@ -52,6 +52,7 @@ export class MusicHistoryService {
         "history.created_at",
       ])
       .leftJoinAndSelect("history.music", "music")
+      .leftJoinAndSelect("music.id_composer", "composer")
       .andWhere("history.id_user = :id_user", { id_user })
       .andWhere("music.is_show = 1");
 
@@ -71,7 +72,14 @@ export class MusicHistoryService {
     limit && historyRepo.take(limit);
     offset && historyRepo.skip(offset);
 
-    const history = await historyRepo.getMany();
+    // Parse data
+    const history: any[] = await historyRepo.getMany();
+    history.map((h) => {
+      h.music.composer = h.music.id_composer?.name || null;
+      delete h.music.id_composer;
+      return h;
+    });
+
     return { data: history };
   }
 }

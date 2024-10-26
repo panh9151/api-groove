@@ -1,6 +1,10 @@
 import { Album } from "./../../api-entity/Album.entity";
 import { FavoriteAlbumDetail } from "./../../api-entity/FavoriteAlbumDetail.entity";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateFavoriteAlbumDto } from "./dto/favorite-album.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -27,7 +31,7 @@ export class FavoriteAlbumService {
       where: { id_user, id_album },
     });
     if (!existingFavoriteAlbum || existingFavoriteAlbum.length !== 0)
-      throw new NotFoundException("The album is already in your favorites");
+      throw new ConflictException("The album is already in your favorites");
 
     // Update db
     const favoriteAlbum = this.favoriteRepo.create({
@@ -69,12 +73,17 @@ export class FavoriteAlbumService {
     const id_user = req.user.id_user;
     const { id_album } = body;
 
+    // Check existing album
+    const existingAlbum = await this.albumRepo.find({ where: { id_album } });
+    if (!existingAlbum || existingAlbum.length !== 1)
+      throw new NotFoundException("Album not found");
+
     // Check if the album exists in favorites
     const existingFavoriteAlbum = await this.favoriteRepo.find({
       where: { id_user, id_album },
     });
     if (existingFavoriteAlbum.length !== 1) {
-      throw new NotFoundException("The album is not in your favorites");
+      throw new ConflictException("The album is not in your favorites");
     }
 
     // Update db - Remove favorite

@@ -1,5 +1,9 @@
 import { User } from "./../../api-entity/User.entity";
-import { ConflictException, Injectable } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -194,7 +198,7 @@ export class UserService {
     });
 
     if (result.affected === 0) {
-      throw new ConflictException("User not found or nothing was updated");
+      throw new NotFoundException("User not found or nothing was updated");
     }
 
     return { message: `Updated successfully` };

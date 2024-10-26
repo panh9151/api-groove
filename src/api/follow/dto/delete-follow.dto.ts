@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
-export class CreateComposerDto {
+export class DeleteFollowDto {
   @IsString()
   @ApiProperty({
-    description: "Tên nhạc sĩ (Bắt buộc)",
-    example: "Bùi Công Nam (Bắt buộc)",
+    description: "ID artist (Bắt buộc)",
+    example: "a0001 (Bắt buộc)",
     required: true,
   })
-  name: string;
+  id_artist;
 }

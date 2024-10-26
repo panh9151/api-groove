@@ -12,13 +12,29 @@ import {
 import { FileInterceptor } from "@nestjs/platform-express";
 import { AdminGuard } from "../../../guard/admin/admin.guard";
 import { DeleteDto } from "./dto/delete.dto";
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 @Controller("upload-image")
+@ApiTags("upload")
 @UseGuards(AdminGuard)
 export class UploadImageController {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
 
   @Post()
+  @ApiOperation({ summary: "Upload audio/video - Yêu cầu admin" })
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    description: "Tải lên tệp với key là file",
+    schema: {
+      type: "object",
+      properties: {
+        file: {
+          type: "string",
+          format: "binary", // Định nghĩa file upload
+        },
+      },
+    },
+  })
   @UseInterceptors(
     FileInterceptor("file", {
       fileFilter: (req, file, callback) => {
@@ -50,6 +66,7 @@ export class UploadImageController {
   }
 
   @Delete("")
+  @ApiOperation({ summary: "Xóa audio/video - Yêu cầu admin" })
   async deleteImage(@Body() body: DeleteDto) {
     const { url } = body;
     // Extract public_id using regex

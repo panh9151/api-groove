@@ -1,3 +1,4 @@
+import { ApiOperation } from "@nestjs/swagger";
 import { Album } from "./../../api-entity/Album.entity";
 import { Artist } from "./../../api-entity/Artist.entity";
 import { Music } from "./../../api-entity/Music.entity";
@@ -13,6 +14,7 @@ export class SearchService {
     @InjectRepository(Album) private readonly albumRepo: Repository<Album>
   ) {}
 
+  @ApiOperation({ summary: "Tìm kiếm" })
   async findAll(req, search_text: string) {
     if (!search_text) throw new BadRequestException("Missing search_text");
 

@@ -2,7 +2,11 @@ import { MusicAlbum } from "./../../api-entity/MusicAlbum.entity";
 import { Artist } from "./../../api-entity/Artist.entity";
 import { Music } from "./../../api-entity/Music.entity";
 import { Album } from "./../../api-entity/Album.entity";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 import { UpdateAlbumDto } from "./dto/update-album.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -35,7 +39,7 @@ export class AlbumService {
       const album = await this.albumRepo.find({ where: { slug } });
 
       if (album.length !== 0)
-        throw new NotFoundException("slug already existed");
+        throw new ConflictException("Slug already existed");
     }
 
     // Check exiting music
@@ -182,7 +186,7 @@ export class AlbumService {
     if (slug && slug !== existingAlbum.slug) {
       const albumWithSlug = await this.albumRepo.find({ where: { slug } });
       if (albumWithSlug.length !== 0)
-        throw new NotFoundException("Slug already exists");
+        throw new ConflictException("Slug already exists");
     }
 
     // Check existing artist

@@ -1,6 +1,10 @@
 import { FavoriteMusic } from "./../../api-entity/FavoriteMusic.entity";
 import { Music } from "./../../api-entity/Music.entity";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateFavoriteMusicDto } from "./dto/favorite-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -27,7 +31,7 @@ export class FavoriteMusicService {
       where: { id_user, id_music },
     });
     if (!existingFavoriteMusic || existingFavoriteMusic.length !== 0)
-      throw new NotFoundException("The music is already in your favorites");
+      throw new ConflictException("The music is already in your favorites");
 
     // Update db
     const favoriteMusic = this.favoriteRepo.create({
@@ -50,6 +54,7 @@ export class FavoriteMusicService {
       .leftJoinAndSelect("mad.artist", "artist")
       .leftJoinAndSelect("music.types", "mtd")
       .leftJoinAndSelect("mtd.type", "type")
+      .leftJoinAndSelect("music.id_composer", "id_composer")
       .andWhere("fa.id_user = :id_user", { id_user })
       .andWhere("music.is_show = 1");
 
@@ -67,15 +72,18 @@ export class FavoriteMusicService {
       const last_update = music.music.last_update;
       const artists = music.music.artists.map((artist) => artist.artist);
       const types = music.music.types.map((type) => type.type);
+      const composer = music.music.id_composer.name;
 
       delete music.music.artists;
       delete music.music.types;
+      delete music.music.id_composer;
 
       return {
+        ...music.music,
         last_update,
         artists,
         types,
-        ...music.music,
+        composer,
       };
     });
 

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreatePlaylistDto } from "./dto/create-playlist.dto";
 import { UpdatePlaylistDto } from "./dto/update-playlist.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -51,7 +55,7 @@ export class PlaylistService {
       .andWhere("id_playlist = :id_playlist", { id_playlist })
       .getMany();
     if (existingPlaylistDetail.length !== 1) {
-      throw new NotFoundException("Music not in the playlist");
+      throw new ConflictException("Music not in the playlist");
     }
 
     // Update db
@@ -95,7 +99,7 @@ export class PlaylistService {
       .andWhere("id_playlist = :id_playlist", { id_playlist })
       .getMany();
     if (existingPlaylistDetail.length !== 0) {
-      throw new NotFoundException("Music already in the playlist");
+      throw new ConflictException("Music already in the playlist");
     }
 
     // Update db

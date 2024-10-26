@@ -1,9 +1,41 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateTypeDto } from "./create-type.dto";
-import { IsOptional, IsString } from "class-validator";
+import {
+  IsUUID,
+  IsString,
+  IsDate,
+  IsIn,
+  IsOptional,
+  IsNotEmpty,
+} from "class-validator";
+import { ApiProperty } from "@nestjs/swagger"; // Thêm import cho ApiProperty
 
-export class UpdateTypeDto extends PartialType(CreateTypeDto) {
+export class UpdateTypeDto {
+  // Name is required
+  @ApiProperty({
+    description: "Tên loại",
+    example: "Dân ca",
+  })
   @IsString()
   @IsOptional()
   name: string;
+
+  // Slug is optional
+  @ApiProperty({
+    description: "Slug loại",
+    example: "dan-ca",
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  slug: string;
+
+  // is_show defaults to 1 if not provided
+  @ApiProperty({
+    description: "Trạng thái hiển thị (0 hoặc 1)",
+    example: 1,
+    default: 1,
+    required: false,
+  })
+  @IsIn([0, 1])
+  @IsOptional()
+  is_show: 0 | 1 = 1;
 }

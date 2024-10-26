@@ -30,7 +30,6 @@ export class TypeService {
     const newType = this.typeRepository.create({
       name: body.name,
       slug: body.slug,
-      created_at: body.created_at,
       is_show: body.is_show,
     });
     const savedType = await this.typeRepository.save(newType);

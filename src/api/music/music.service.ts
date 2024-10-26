@@ -195,7 +195,7 @@ export class MusicService {
       delete music.favoriteMusics;
       delete music.id_composer;
 
-      return musics;
+      return music;
     });
 
     return { data: musics };

@@ -7,7 +7,7 @@ import {
   Query,
 } from "@nestjs/common";
 import { CreateFollowDto } from "./dto/create-follow.dto";
-import { UpdateFollowDto } from "./dto/update-follow.dto";
+import { DeleteFollowDto } from "./dto/delete-follow.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Follow } from "../artist/entities/follow.entity";
@@ -67,9 +67,13 @@ export class FollowService {
     };
   }
 
-  async remove(body: UpdateFollowDto, req: any) {
+  async remove(body: DeleteFollowDto, req: any) {
     const { id_artist } = body;
     const id_user = req.user.id_user;
+
+    // Check existing id_artist
+    const artist = await this.artistRepo.find({ where: { id_artist } });
+    if (artist.length !== 1) throw new NotFoundException("Artist not found");
 
     // Check if follow exist
     const follow = await this.followRepo.findOne({

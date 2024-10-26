@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
   IsEnum,
@@ -21,41 +22,68 @@ enum Status {
 export class UpdateInforDto {
   @IsString()
   @IsOptional()
+  @ApiProperty({
+    description: "Tên đầy đủ",
+    example: "Nguyễn Văn A",
+    required: false,
+  })
   fullname: string;
 
   @IsString()
   @IsUrl()
   @IsOptional()
+  @ApiProperty({
+    description: "Url avatar",
+    example: "http://example@gmail.com",
+    required: false,
+  })
   url_avatar: string;
 
   @IsString()
   @Length(10, 12)
   @IsOptional()
+  @ApiProperty({
+    description: "Số điện thoại",
+    example: "0123456789",
+    required: false,
+  })
   phone: string;
 
   @IsEnum(Gender, {
     message: "Role must be one of the following: admin, user, guest",
   })
   @IsOptional()
+  @ApiProperty({
+    description: "Giới tính",
+    example: "male",
+    required: false,
+  })
   gender: Gender;
 
   @IsInt()
   @IsOptional()
+  @ApiProperty({
+    description: "Tuổi",
+    example: 19,
+    required: false,
+  })
   age: number;
 
   @IsDate()
   @IsOptional()
+  @ApiProperty({
+    description: "Ngày sinh",
+    example: "2023-12-25",
+    required: false,
+  })
   birthday: string;
 
   @IsString()
   @IsOptional()
-  country: string;
-
-  @IsString()
-  @IsOptional()
-  @IsEnum(Gender, {
-    message:
-      "User banned status must be one of the following: 0 (active) and 1 (banned)",
+  @ApiProperty({
+    description: "Quốc tịch",
+    example: "VN",
+    required: false,
   })
-  is_banned: Status;
+  country: string;
 }

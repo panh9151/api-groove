@@ -9,13 +9,17 @@ import {
 import { UpdateInforService } from "./update-infor.service";
 import { UpdateInforDto } from "./dto/update-infor.dto";
 import { UserGuard } from "../../../guard/user/user.guard";
+import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 @Controller("update-infor")
+@ApiTags("auth")
 export class UpdateInforController {
   constructor(private readonly updateInforService: UpdateInforService) {}
 
   @UseGuards(UserGuard)
   @Patch("")
+  @ApiOperation({ summary: "Sửa thông tin người dùng - Yêu cầu đăng nhập" })
+  @ApiBody({ type: UpdateInforDto })
   update(@Request() req: any, @Body() body: UpdateInforDto) {
     const id_user = req.user.id_user;
 

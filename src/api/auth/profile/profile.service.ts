@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException, UseGuards } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Profile } from "./entities/profile.entity";
 import { Repository } from "typeorm";
@@ -27,6 +27,8 @@ export class ProfileService {
       ])
       .andWhere("user.id_user = :id_user", { id_user: req.user.id_user })
       .getOne();
+
+    if (!user) throw new NotFoundException("User not found");
 
     return user;
   }

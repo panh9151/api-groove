@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsOptional, IsString, IsUrl, IsUUID } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,22 +9,38 @@ export enum ShowStatus {
 
 export class CreateArtistDto {
   @IsString()
-  @IsOptional()
-  id_artist: string = uuidv4();
-
-  @IsString()
+  @ApiProperty({
+    description: "Tên artist (Bắt buộc",
+    example: "Taylor Swift (Bắt buộc)",
+    required: true,
+  })
   name: string;
 
   @IsOptional()
   @IsString()
+  @ApiProperty({
+    description: "Slug artist",
+    example: "taylor-swift",
+    required: false,
+  })
   slug: string;
 
   @IsOptional()
   @IsString()
   @IsUrl()
+  @ApiProperty({
+    description: "Url ảnh đại diện",
+    example: "http://example.com",
+    required: false,
+  })
   url_cover: string;
 
   @IsOptional()
   @IsEnum(ShowStatus)
+  @ApiProperty({
+    description: "Trạng thái hiển thị",
+    example: 1,
+    required: false,
+  })
   is_show: ShowStatus;
 }
