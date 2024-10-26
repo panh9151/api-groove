@@ -3,7 +3,7 @@ import {
   ConflictException,
   Injectable,
 } from "@nestjs/common";
-import { ResetPassworđto } from "./dto/reset-password.dto";
+import { ResetPassworDto } from "./dto/reset-password.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ResetPasswordEntity } from "./entities/reset-password.entity";
 import { Repository } from "typeorm";
@@ -14,7 +14,7 @@ export class ResetPasswordService {
   @InjectRepository(ResetPasswordEntity)
   private readonly resetPasswordRepository: Repository<ResetPasswordEntity>;
 
-  async resetPasword(body: ResetPassworđto, token: string) {
+  async resetPasword(body: ResetPassworDto, token: string) {
     const { newPassword } = body;
 
     // Check token

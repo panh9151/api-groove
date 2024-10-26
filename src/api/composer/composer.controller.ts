@@ -14,7 +14,7 @@ import { UpdateComposerDto } from "./dto/update-composer.dto";
 import { AdminGuard } from "../../guard/admin/admin.guard";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
-@Controller("Composer")
+@Controller("composer")
 @ApiTags("composer")
 export class ComposerController {
   constructor(private readonly composerService: ComposerService) {}

@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Param } from "@nestjs/common";
 import { ResetPasswordService } from "./reset-password.service";
-import { ResetPassworđto } from "./dto/reset-password.dto";
+import { ResetPassworDto } from "./dto/reset-password.dto";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 @Controller("reset-password")
@@ -10,8 +10,8 @@ export class ResetPasswordController {
 
   @Post(":token")
   @ApiOperation({ summary: "Reset mật khẩu" })
-  @ApiBody({ type: ResetPassworđto })
-  resetPasword(@Param("token") token: string, @Body() body: ResetPassworđto) {
+  @ApiBody({ type: ResetPassworDto })
+  resetPasword(@Param("token") token: string, @Body() body: ResetPassworDto) {
     return this.resetPasswordService.resetPasword(body, token);
   }
 }

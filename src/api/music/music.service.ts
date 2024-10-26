@@ -151,24 +151,35 @@ export class MusicService {
       .leftJoinAndSelect("music.id_composer", "composer");
 
     // Apply filters based on the parameters
-    id_music && musicRepo.andWhere("music.id_music = :id_music", { id_music });
-    name && musicRepo.andWhere("music.name = :name", { name });
-    slug && musicRepo.andWhere("music.slug = :slug", { slug });
-    producer &&
-      musicRepo.andWhere("music.producer = :producer", {
-        producer: `%${producer}%`,
-      });
-    composer &&
-      musicRepo.andWhere("composer.id_composer = :composer", {
-        composer: `%${composer}%`,
-      });
-    is_show &&
-      musicRepo.andWhere("music.is_show = :is_show", {
-        is_show: `%${is_show}%`,
-      });
-    id_type && musicRepo.andWhere("music.id_type = :id_type", { id_type });
-    id_artist &&
-      musicRepo.andWhere("music.id_artist = :id_artist", { id_artist });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      absolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (absolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("music.composer", composer, musicRepo);
+    getByParam("music.id_music", id_music, musicRepo);
+    getByParam("music.name", name, musicRepo);
+    getByParam("music.slug", slug, musicRepo);
+    getByParam("music.producer", producer, musicRepo, true);
+    getByParam("music.is_show", is_show, musicRepo);
+    getByParam("music.id_type", id_type, musicRepo);
+    getByParam("music.id_artist", id_artist, musicRepo);
 
     // Apply visible rows by role
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});

@@ -56,10 +56,31 @@ export class TypeService {
       ]);
 
     // Apply filters based on the parameters
-    id_type && type.andWhere("type.id_type = :id_type", { id_type });
-    name && type.andWhere("type.name LIKE :name", { name: `%${name}%` });
-    slug && type.andWhere("type.slug = :slug", { slug });
-    is_show in [0, 1] && type.andWhere("type.is_show = :is_show", { is_show });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      absolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (absolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("type.id_type", id_type, type);
+    getByParam("type.name", name, type, true);
+    getByParam("type.slug", slug, type);
+    getByParam("type.is_show", is_show, type);
 
     // Apply visible rows by role
     req?.user?.role !== "admin" && type.andWhere("type.is_show = 1", {});

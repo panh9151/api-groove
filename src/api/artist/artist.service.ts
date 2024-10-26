@@ -52,14 +52,31 @@ export class ArtistService {
       ]);
 
     // Apply filters based on the parameters
-    id_artist &&
-      artist.andWhere("artist.id_artist = :id_artist", {
-        id_artist: id_artist,
-      });
-    name && artist.andWhere("artist.name like :name", { name: `%${name}%` });
-    slug && artist.andWhere("artist.slug = :slug", { slug: slug });
-    is_show in [0 | 1] &&
-      artist.andWhere("artist.is_show = :is_show", { is_show: is_show });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      absolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (absolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("artist.id_artist", id_artist, artist);
+    getByParam("artist.name", name, artist, true);
+    getByParam("artist.slug", slug, artist);
+    getByParam("artist.is_show", is_show, artist);
 
     // Apply visible rows by role
     req?.user?.role !== "admin" && artist.andWhere("artist.is_show = 1", {});

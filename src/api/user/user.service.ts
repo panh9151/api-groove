@@ -95,27 +95,37 @@ export class UserService {
       ]);
 
     // Apply filters based on the parameters
-    id_user && userRepo.andWhere("userid_user = id_user", { id_user });
-    email && userRepo.andWhere("user.email = :email", { email });
-    role && userRepo.andWhere("user.role = :role", { role });
-    fullname &&
-      userRepo.andWhere("user.fullname like :fullname", {
-        fullname: `%${fullname}%`,
-      });
-    phone && userRepo.andWhere("user.phone = :phone", { phone });
-    gender && userRepo.andWhere("user.gender = :gender", { gender });
-    birthday &&
-      userRepo.andWhere("user.birthday like :birthday", {
-        birthday: `%${birthday}%`,
-      });
-    country &&
-      userRepo.andWhere("user.country like :country", {
-        country: `%${country}%`,
-      });
-    is_banned &&
-      userRepo.andWhere("user.is_banned = :is_banned", { is_banned });
-    id_google &&
-      userRepo.andWhere("user.id_google = :id_google", { id_google });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      notAbsolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (notAbsolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("user.id_user", id_user, userRepo);
+    getByParam("user.email", email, userRepo);
+    getByParam("user.role", role, userRepo);
+    getByParam("user.fullname", fullname, userRepo, true);
+    getByParam("user.phone", phone, userRepo);
+    getByParam("user.gender", gender, userRepo);
+    getByParam("user.birthday", birthday, userRepo, true);
+    getByParam("user.country", country, userRepo, true);
+    getByParam("user.is_banned", is_banned, userRepo);
+    getByParam("user.id_google", id_google, userRepo);
 
     // Apply limit and offset
     limit && userRepo.take(limit);

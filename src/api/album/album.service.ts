@@ -110,19 +110,33 @@ export class AlbumService {
       .leftJoinAndSelect("musics.music", "music");
 
     // Apply filters based on the parameters
-    id_album &&
-      album.andWhere("album.id_album = :id_album", { id_album: id_album });
-    id_artist && album.andWhere("album.id_artist = :id_artist", { id_artist });
-    name && album.andWhere("album.name like :name", { name: `%${name}%` });
-    slug && album.andWhere("album.slug = :slug", { slug });
-    publish_by &&
-      album.andWhere("album.publish_by like :publish_by", {
-        publish_by: `%${publish_by}%`,
-      });
-    is_show &&
-      album.andWhere("album.is_show like :is_show", {
-        is_show,
-      });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      absolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (absolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("album.id_album", id_album, album);
+    getByParam("album.id_artist", id_artist, album);
+    getByParam("album.name", name, album, true);
+    getByParam("album.slug", slug, album);
+    getByParam("album.publish_by", publish_by, album, true);
+    getByParam("album.is_show", is_show, album);
 
     // Apply visible rows by role
     req?.user?.role !== "admin" && album.andWhere("album.is_show = 1", {});

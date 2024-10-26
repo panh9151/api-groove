@@ -57,16 +57,30 @@ export class MusicHistoryService {
       .andWhere("music.is_show = 1");
 
     // Apply filters based on the parameters
-    id_music &&
-      historyRepo.andWhere("music.id_music = :id_music", { id_music });
-    id_music_history &&
-      historyRepo.andWhere("history.id_music_history = :id_music_history", {
-        id_music_history,
-      });
-    play_duration &&
-      historyRepo.andWhere("history.play_duration = :play_duration", {
-        play_duration,
-      });
+    const getByParam = (
+      param,
+      value,
+      repo,
+      absolute: boolean = false,
+      queryBy: "and" | "or" = "and"
+    ) => {
+      if (value !== null && value !== undefined && value !== "") {
+        if (absolute === true) value = `%${value}%`;
+        if (queryBy === "and") {
+          repo.andWhere(`${param} = :value`, {
+            value,
+          });
+        } else {
+          repo.orWhere(`${param} = :value`, {
+            value,
+          });
+        }
+      }
+    };
+
+    getByParam("music.id_music", id_music, historyRepo);
+    getByParam("history.id_music_history", id_music_history, historyRepo);
+    getByParam("history.play_duration", play_duration, historyRepo);
 
     // Apply limit and offset
     limit && historyRepo.take(limit);

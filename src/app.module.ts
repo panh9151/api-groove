@@ -31,6 +31,7 @@ import { PlaylistModule } from "./api/playlist/playlist.module";
 import { RankingModule } from "./api/ranking/ranking.module";
 import { SearchModule } from "./api/search/search.module";
 import { ComposerModule } from "./api/composer/composer.module";
+import { ChartModule } from './api/chart/chart.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { ComposerModule } from "./api/composer/composer.module";
     RankingModule,
     SearchModule,
     ComposerModule,
+    ChartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
