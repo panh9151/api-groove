@@ -53,7 +53,6 @@ export class CreateAlbumDto {
   })
   url_cover;
 
-  @IsDate()
   @IsOptional()
   @ApiProperty({
     description: "Ngày phát hành",
@@ -85,7 +84,10 @@ export class CreateAlbumDto {
   @Type(() => MusicALbum)
   @ApiProperty({
     description: "Danh sách bài hát",
-    example: ["m0001", "m0003", "m009"],
+    example: [
+      { id_music: "m0001", index_order: 2 },
+      { id_music: "m0002", index_order: 1 },
+    ],
     required: false,
   })
   musics: MusicALbum[];

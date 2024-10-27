@@ -125,7 +125,11 @@ export class TypeService {
     if (!existingType) {
       throw new NotFoundException(`Type not found`);
     }
+
     Object.assign(existingType, body);
+
+    // Save changes
+    await this.typeRepository.save(existingType);
 
     return { success: "Updated successfully" };
   }
