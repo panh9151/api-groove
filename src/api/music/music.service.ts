@@ -178,8 +178,8 @@ export class MusicService {
     getByParam("music.slug", slug, musicRepo);
     getByParam("music.producer", producer, musicRepo, true);
     getByParam("music.is_show", is_show, musicRepo);
-    getByParam("music.id_type", id_type, musicRepo);
-    getByParam("music.id_artist", id_artist, musicRepo);
+    getByParam("ty.id_type", id_type, musicRepo);
+    getByParam("a.id_artist", id_artist, musicRepo);
 
     // Apply visible rows by role
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
