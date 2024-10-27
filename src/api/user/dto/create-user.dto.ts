@@ -87,7 +87,6 @@ export class CreateUserDto {
   })
   url_avatar: string;
 
-  @IsDate()
   @IsOptional()
   @ApiProperty({
     description: "Ngày sinh",

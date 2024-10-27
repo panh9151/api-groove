@@ -35,14 +35,14 @@ export class CreateMusicDto {
   })
   slug: string;
 
-  @IsString()
-  @IsUrl()
-  @IsOptional()
   @ApiProperty({
     description: "Url bài hát",
     example: "http://example.com",
     required: false,
   })
+  @IsString()
+  @IsUrl()
+  @IsOptional()
   url_path: string;
 
   @IsString()
@@ -73,7 +73,6 @@ export class CreateMusicDto {
   })
   composer: string;
 
-  @IsDate()
   @IsOptional()
   @ApiProperty({
     description: "Ngày phát hành",

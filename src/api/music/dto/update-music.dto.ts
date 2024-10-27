@@ -74,7 +74,6 @@ export class UpdateMusicDto {
   })
   composer: string;
 
-  @IsDate()
   @IsOptional()
   @ApiProperty({
     description: "Ngày phát hành",

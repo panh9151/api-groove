@@ -69,7 +69,6 @@ export class UpdateInforDto {
   })
   age: number;
 
-  @IsDate()
   @IsOptional()
   @ApiProperty({
     description: "Ngày sinh",
