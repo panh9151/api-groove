@@ -30,6 +30,6 @@ export class ProfileService {
 
     if (!user) throw new NotFoundException("User not found");
 
-    return user;
+    return { data: user };
   }
 }
