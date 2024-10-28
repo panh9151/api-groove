@@ -5,6 +5,7 @@ import {
   Controller,
   Delete,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -67,8 +68,8 @@ export class UploadImageController {
 
   @Delete("")
   @ApiOperation({ summary: "Xóa audio/video - Yêu cầu admin" })
-  async deleteImage(@Body() body: DeleteDto) {
-    const { url } = body;
+  async deleteImage(@Body() body: DeleteDto, @Query("url") url: string) {
+    // const { url } = body;
     // Extract public_id using regex
     const regex = /\/([^\/]+)\/([^\/]+)$/;
     const matches = url.match(regex);
