@@ -39,15 +39,15 @@ export class UploadAudioController {
   @UseInterceptors(
     FileInterceptor("file", {
       fileFilter: (req, file, callback) => {
-        const allowedMimeTypes = ["audio/mpeg", "audio/mp3", "audio/mp4"];
-        if (!allowedMimeTypes.includes(file.mimetype)) {
-          return callback(
-            new BadRequestException(
-              "Only audio files (mpeg, mp3, mp4) are allowed!"
-            ),
-            false
-          );
-        }
+        // const allowedMimeTypes = ["audio/mpeg", "audio/mp3", "audio/mp4"];
+        // if (!allowedMimeTypes.includes(file.mimetype)) {
+        //   return callback(
+        //     new BadRequestException(
+        //       "Only audio files (mpeg, mp3, mp4) are allowed!"
+        //     ),
+        //     false
+        //   );
+        // }
         callback(null, true);
       },
     })
