@@ -32,6 +32,7 @@ import { RankingModule } from "./api/ranking/ranking.module";
 import { SearchModule } from "./api/search/search.module";
 import { ComposerModule } from "./api/composer/composer.module";
 import { ChartModule } from './api/chart/chart.module';
+import { CommentModule } from './api/comment/comment.module';
 
 @Module({
   imports: [
@@ -86,6 +87,7 @@ import { ChartModule } from './api/chart/chart.module';
     SearchModule,
     ComposerModule,
     ChartModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

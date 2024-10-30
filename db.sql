@@ -6,6 +6,8 @@ ALTER DATABASE groovo CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 use groovo;
 
 -- Drop tables if they exist
+DROP TABLE IF EXISTS Comment;
+
 DROP TABLE IF EXISTS FavoriteAlbum;
 
 DROP TABLE IF EXISTS FavoriteMusic;
@@ -191,6 +193,17 @@ CREATE TABLE FavoriteAlbum (
     PRIMARY KEY (id_user, id_album),
     FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_album) REFERENCES Album(id_album) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Comment (
+    id_comment varchar(36) DEFAULT UUID() primary key not null,
+    id_user varchar (36) not null,
+    id_music varchar (36) not null,
+    text text not null,
+    is_show tinyint(1) default 1,
+    created_at DATETIME DEFAULT NOW(),
+    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Trigger for User table
@@ -2713,3 +2726,9 @@ insert into MusicPlaylistDetail (id_playlist, id_music) values
 ("p0005", "m0004"),
 ("p0005", "m0005"),
 ("p0005", "m0006");
+
+INSERT INTO Comment (id_user, id_music, text, is_show)
+values ("u0001", "m0001", "Comment 1", 1),
+("u0001", "m0001", "Comment 2", 1),
+("u0001", "m0001", "Comment 3", 1),
+("u0001", "m0001", "Comment 4", 0);
