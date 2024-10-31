@@ -17,12 +17,14 @@ export class UpdateInforService {
 
   async updateUser(id: string, body: UpdateInforDto) {
     // Check existing phone
-    const existingUser = await this.updateInforRepository.findOne({
-      where: { phone: body.phone },
-    });
+    if (!body.phone) {
+      const existingUser = await this.updateInforRepository.findOne({
+        where: { phone: body.phone },
+      });
 
-    if (existingUser) {
-      throw new ConflictException("Email already exists");
+      if (existingUser) {
+        throw new ConflictException("Phone already exists");
+      }
     }
 
     // Update db
