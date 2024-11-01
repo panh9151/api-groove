@@ -50,7 +50,7 @@ export class UpdateInforDto {
   phone: string;
 
   @IsEnum(Gender, {
-    message: "Role must be one of the following: admin, user, guest",
+    message: "Gender must be one of the following: male, female",
   })
   @IsOptional()
   @ApiProperty({
