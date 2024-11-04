@@ -16,7 +16,7 @@ export class UserService {
   ) {}
 
   async create(body: CreateUserDto) {
-    let {
+    const {
       email,
       password,
       role = "user",
@@ -28,8 +28,6 @@ export class UserService {
       country,
       is_banned,
     } = body;
-
-    if (!birthday) birthday = new Date(birthday) as any;
 
     // Check unique email
     const userWithEmail = await this.userRepo.find({ where: { email } });
@@ -164,7 +162,7 @@ export class UserService {
       throw new ConflictException("User not found");
     }
 
-    let {
+    const {
       email,
       password,
       role,
@@ -176,8 +174,6 @@ export class UserService {
       country,
       is_banned,
     } = body;
-
-    if (!birthday) birthday = new Date(birthday) as any;
 
     // Check unique email
     if (email && email !== user.email) {
