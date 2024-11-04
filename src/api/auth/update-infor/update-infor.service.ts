@@ -17,7 +17,7 @@ export class UpdateInforService {
 
   async updateUser(id: string, body: UpdateInforDto) {
     // Check existing phone
-    if (!body.phone) {
+    if (body.phone) {
       const existingUser = await this.updateInforRepository.findOne({
         where: { phone: body.phone },
       });

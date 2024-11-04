@@ -53,6 +53,7 @@ export class FollowService {
       .select([
         "follow.created_at as follow_at",
         "artist.name as name",
+        "artist.id_artist as id_artist",
         "artist.slug as slug",
         "artist.url_cover as url_cover",
         "artist.is_show as is_show",
