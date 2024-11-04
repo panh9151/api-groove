@@ -33,7 +33,7 @@ export class User {
   url_avatar: string;
 
   @Column({ type: "date", nullable: true })
-  birthday: string;
+  birthday: Date;
 
   @Column({ type: "varchar", length: 255, nullable: true })
   country: string;

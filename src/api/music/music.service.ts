@@ -94,7 +94,7 @@ export class MusicService {
       url_cover: body.url_cover,
       producer: body.producer,
       composer: body.composer,
-      release_date: body.release_date,
+      release_date: new Date(body.release_date),
       is_show: body.is_show,
     });
 

@@ -16,7 +16,7 @@ export class UserService {
   ) {}
 
   async create(body: CreateUserDto) {
-    const {
+    let {
       email,
       password,
       role = "user",
@@ -28,6 +28,8 @@ export class UserService {
       country,
       is_banned,
     } = body;
+
+    if (!birthday) birthday = new Date(birthday) as any;
 
     // Check unique email
     const userWithEmail = await this.userRepo.find({ where: { email } });

@@ -37,7 +37,7 @@ export class Music {
   producer: string;
 
   @Column({ type: "date", nullable: true })
-  release_date: string;
+  release_date: Date;
 
   @CreateDateColumn({ type: "datetime" })
   created_at: string;
