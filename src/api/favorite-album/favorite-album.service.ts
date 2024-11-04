@@ -69,9 +69,8 @@ export class FavoriteAlbumService {
     return { data: favoriteAlbumList };
   }
 
-  async remove(req: any, body: CreateFavoriteAlbumDto) {
+  async remove(req: any, id_album: string) {
     const id_user = req.user.id_user;
-    const { id_album } = body;
 
     // Check existing album
     const existingAlbum = await this.albumRepo.find({ where: { id_album } });

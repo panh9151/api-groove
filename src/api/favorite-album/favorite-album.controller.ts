@@ -113,7 +113,6 @@ export class FavoriteAlbumController {
   @UseGuards(UserGuard)
   @Delete("me")
   @ApiOperation({ summary: "Xóa album yêu thích - Yêu cầu đăng nhập" })
-  @ApiBody({ type: CreateFavoriteAlbumDto })
   @ApiResponse({ status: 200, description: "Thành công" })
   @ApiResponse({ status: 400, description: "Gửi sai request" })
   @ApiResponse({
@@ -126,7 +125,7 @@ export class FavoriteAlbumController {
     description: "Album không tồn tại trong favorite",
   })
   @ApiResponse({ status: 500, description: "Lỗi server" })
-  delete(@Request() req: any, @Body() body: CreateFavoriteAlbumDto) {
-    return this.favoriteAlbumService.remove(req, body);
+  delete(@Request() req: any, @Query("id_album") id_album: string) {
+    return this.favoriteAlbumService.remove(req, id_album);
   }
 }

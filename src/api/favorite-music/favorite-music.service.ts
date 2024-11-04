@@ -90,9 +90,8 @@ export class FavoriteMusicService {
     return { data: favoriteMusicList };
   }
 
-  async remove(req: any, body: CreateFavoriteMusicDto) {
+  async remove(req: any, id_music: string) {
     const id_user = req.user.id_user;
-    const { id_music } = body;
 
     // Check if the music exists in favorites
     const existingFavoriteMusic = await this.favoriteRepo.find({

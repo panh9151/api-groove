@@ -151,8 +151,7 @@ export class FavoriteMusicController {
     description: "Music không tồn tại trong favorite",
   })
   @ApiResponse({ status: 500, description: "Lỗi server" })
-  @ApiBody({ type: CreateFavoriteMusicDto })
-  delete(@Request() req: any, @Body() body: CreateFavoriteMusicDto) {
-    return this.favoriteMusicService.remove(req, body);
+  delete(@Request() req: any, @Query("id_music") id_music: string) {
+    return this.favoriteMusicService.remove(req, id_music);
   }
 }
