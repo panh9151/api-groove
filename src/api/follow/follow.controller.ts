@@ -120,14 +120,13 @@ export class FollowController {
   @UseGuards(UserGuard)
   @Delete("me")
   @ApiOperation({ summary: "Xóa follow - Yêu cầu đăng nhập" })
-  @ApiBody({ type: DeleteFollowDto })
   @ApiResponse({ status: 200, description: "Thành công" })
   @ApiResponse({ status: 400, description: "Gửi sai request" })
   @ApiResponse({ status: 403, description: "Chưa đăng nhập" })
   @ApiResponse({ status: 404, description: "ID artist không tồn tại" })
   @ApiResponse({ status: 409, description: "Chưa follow artist" })
   @ApiResponse({ status: 500, description: "Lỗi server" })
-  removeForUser(@Request() req: any, @Body() body: DeleteFollowDto) {
-    return this.followService.remove(body, req);
+  removeForUser(@Request() req: any, @Query("id_artist") id_artist: string) {
+    return this.followService.remove(id_artist, req);
   }
 }

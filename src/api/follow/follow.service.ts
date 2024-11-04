@@ -68,8 +68,7 @@ export class FollowService {
     };
   }
 
-  async remove(body: DeleteFollowDto, req: any) {
-    const { id_artist } = body;
+  async remove(id_artist: string, req: any) {
     const id_user = req.user.id_user;
 
     // Check existing id_artist
