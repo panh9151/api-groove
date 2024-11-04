@@ -22,7 +22,7 @@ export class UpdateInforService {
         where: { phone: body.phone },
       });
 
-      if (existingUser) {
+      if (existingUser && existingUser.id_user !== id) {
         throw new ConflictException("Phone already exists");
       }
     }
