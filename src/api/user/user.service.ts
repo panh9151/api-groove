@@ -162,7 +162,7 @@ export class UserService {
       throw new ConflictException("User not found");
     }
 
-    const {
+    let {
       email,
       password,
       role,
@@ -174,6 +174,8 @@ export class UserService {
       country,
       is_banned,
     } = body;
+
+    if (!birthday) birthday = new Date(birthday) as any;
 
     // Check unique email
     if (email && email !== user.email) {
