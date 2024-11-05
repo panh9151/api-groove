@@ -33,6 +33,7 @@ import { SearchModule } from "./api/search/search.module";
 import { ComposerModule } from "./api/composer/composer.module";
 import { ChartModule } from './api/chart/chart.module';
 import { CommentModule } from './api/comment/comment.module';
+import { TopTypeModule } from './api/top-type/top-type.module';
 
 @Module({
   imports: [
@@ -88,6 +89,7 @@ import { CommentModule } from './api/comment/comment.module';
     ComposerModule,
     ChartModule,
     CommentModule,
+    TopTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
