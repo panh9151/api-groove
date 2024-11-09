@@ -311,7 +311,7 @@ export class MusicService {
       url_path: body.url_path ?? music.url_path,
       url_cover: body.url_cover ?? music.url_cover,
       producer: body.producer ?? music.producer,
-      // composer: body.composer ?? music.composer,
+      composer: body.composer ?? music.composer,
       release_date: body.release_date ?? music.release_date,
       is_show: body.is_show ?? music.is_show,
     });
