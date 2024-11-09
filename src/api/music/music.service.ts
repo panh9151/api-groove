@@ -200,7 +200,8 @@ export class MusicService {
         ? music.favoriteMusics.length
         : null;
       music.vỉew = music.musicHistories ? music.musicHistories.length : null;
-      music.composer = music?.id_composer?.name ? music.id_composer.name : null;
+      music.composer = music.id_composer ? music.id_composer : null;
+      // music.composer = music?.id_composer?.name ? music.id_composer.name : null;
 
       delete music.musicHistories;
       delete music.favoriteMusics;
