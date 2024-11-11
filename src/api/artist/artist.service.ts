@@ -48,6 +48,7 @@ export class ArtistService {
         "artist.url_cover as url_cover",
         "artist.created_at as created_at",
         "artist.last_update as last_update",
+        "artist.is_show as is_show",
         "COUNT(f.id_user) AS followers",
       ]);
 

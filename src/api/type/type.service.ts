@@ -144,7 +144,7 @@ export class TypeService {
       .getMany();
 
     if (typeDetail.length > 0) {
-      throw new ConflictException("Delete failed, finding conflict data");
+      throw new ConflictException("Delete failed, finding TypeDetail data");
     }
 
     // Kiểm tra xem bản ghi có tồn tại không
