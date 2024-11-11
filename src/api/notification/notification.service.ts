@@ -28,7 +28,7 @@ export class NotificationService {
     });
 
     // Notification
-    const notifications = [];
+    const notifications: any = [];
     await Promise.all(
       followList.map(async (follow) => {
         const artistId = follow.id_artist;
@@ -53,18 +53,38 @@ export class NotificationService {
           .leftJoinAndSelect("mad.artist", "artist")
           .getMany();
 
+        // newAlbums.map((album) => {
+        //   notifications.push({
+        //     msg: `Nghệ sĩ ${follow.name} vừa thêm mới album '${album.name}'`,
+        //     url: `/albumdetail/${album.id_album}`,
+        //     time: album.created_at,
+        //   });
+        // });
+
+        // newMusic.map((music) => {
+        //   notifications.push({
+        //     msg: `Nghệ sĩ ${follow.name} vừa thêm bài hát mới với tên '${music.name}'`,
+        //     url: `/musicdetail/${music.id_music}`,
+        //     time: music.created_at,
+        //   });
+        // });
+
         newAlbums.map((album) => {
           notifications.push({
-            msg: `Nghệ sĩ ${follow.name} vừa thêm mới album '${album.name}'`,
-            url: `/albumdetail/${album.id_album}`,
+            artist: follow.name,
+            type: "album",
+            id: album.id_album,
+            name: album.name,
             time: album.created_at,
           });
         });
 
         newMusic.map((music) => {
           notifications.push({
-            msg: `Nghệ sĩ ${follow.name} vừa thêm bài hát mới với tên '${music.name}'`,
-            url: `/musicdetail/${music.id_music}`,
+            artist: follow.name,
+            type: "music",
+            id: music.id_music,
+            name: music.name,
             time: music.created_at,
           });
         });
@@ -87,6 +107,42 @@ export class NotificationService {
       })
     );
 
-    return notifications;
+    const result = notifications
+      .reduce((acc, item) => {
+        // Tìm trong acc xem có item nào trùng name không
+        const existingItem = acc.find((group) => group.name === item.name);
+
+        if (existingItem) {
+          // Nếu đã tồn tại, thêm artist vào mảng artist của item đó
+          existingItem.artist.push(item.artist);
+        } else {
+          // Nếu chưa tồn tại, tạo mới một item với name và mảng artist
+          acc.push({
+            ...item,
+            artist: [item.artist], // chuyển artist thành mảng
+          });
+        }
+        return acc;
+      }, [])
+      .map((item) => {
+        // Tạo thông báo sau khi nhóm xong
+        if (item.type === "album") {
+          return {
+            msg: `Nghệ sĩ ${item.artist.join(", ")} vừa thêm mới album '${item.name}'`,
+            url: `/albumdetail/${item.id}`,
+            time: item.time,
+          };
+        } else if (item.type === "music") {
+          return {
+            msg: `Nghệ sĩ ${item.artist.join(", ")} vừa thêm bài hát mới với tên '${item.name}'`,
+            url: `/musicdetail/${item.id}`,
+            time: item.time,
+          };
+        }
+        return item; // nếu không phải album hoặc music, trả về item gốc
+      })
+      .sort((a, b) => b.time - a.time);
+
+    return result;
   }
 }

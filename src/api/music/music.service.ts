@@ -185,7 +185,7 @@ export class MusicService {
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
 
     // Group by id_music
-    musicRepo.groupBy("music.id_music");
+    musicRepo.groupBy("music.id_music, mh.id_music_history");
 
     // Apply limit and offset
     limit && musicRepo.take(limit);
