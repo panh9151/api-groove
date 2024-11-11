@@ -14,10 +14,11 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { AdminGuard } from "../../../guard/admin/admin.guard";
 import { DeleteDto } from "./dto/delete.dto";
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { UserGuard } from "src/guard/user/user.guard";
 
 @Controller("upload-image")
 @ApiTags("upload")
-@UseGuards(AdminGuard)
+@UseGuards(UserGuard)
 export class UploadImageController {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
 
