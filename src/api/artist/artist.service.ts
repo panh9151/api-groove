@@ -120,6 +120,7 @@ export class ArtistService {
         "artist.url_cover AS url_cover",
         "artist.created_at AS created_at",
         "artist.last_update AS last_update",
+        "artist.is_show AS is_show",
         "COUNT(f.id_user) AS followers",
       ])
       .where("artist.id_artist = :id_artist", { id_artist: id });
