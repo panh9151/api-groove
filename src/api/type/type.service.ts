@@ -1,3 +1,4 @@
+import { MusicTypeDetail } from "./../../api-entity/MusicTypeDetail.entity";
 import { Type } from "./../../api-entity/Type.entity";
 import {
   ConflictException,
@@ -13,7 +14,9 @@ import { Repository } from "typeorm";
 export class TypeService {
   constructor(
     @InjectRepository(Type)
-    private readonly typeRepository: Repository<Type>
+    private readonly typeRepository: Repository<Type>,
+    @InjectRepository(MusicTypeDetail)
+    private readonly musicTypeRepo: Repository<MusicTypeDetail>
   ) {}
 
   async create(body: CreateTypeDto) {
@@ -135,6 +138,15 @@ export class TypeService {
   }
 
   async remove(id: string) {
+    const typeDetail = await this.musicTypeRepo
+      .createQueryBuilder("typeDetail")
+      .andWhere("typeDetail.id_type = :id", { id })
+      .getMany();
+
+    if (typeDetail.length > 0) {
+      throw new ConflictException("Delete failed, finding conflict data");
+    }
+
     // Kiểm tra xem bản ghi có tồn tại không
     const result = await this.typeRepository.delete(id);
 

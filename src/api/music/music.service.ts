@@ -200,12 +200,14 @@ export class MusicService {
         ? music.favoriteMusics.length
         : null;
       music.vỉew = music.musicHistories ? music.musicHistories.length : null;
-      music.composer = music.id_composer ? music.id_composer : null;
-      // music.composer = music?.id_composer?.name ? music.id_composer.name : null;
+      // music.composer = music.id_composer ? music.id_composer : null;
+      music.composer = music?.id_composer?.name ? music.id_composer.name : null;
+      music.id_composer = music?.id_composer?.id_composer
+        ? music.id_composer.id_composer
+        : null;
 
       delete music.musicHistories;
       delete music.favoriteMusics;
-      delete music.id_composer;
 
       return music;
     });
@@ -233,11 +235,13 @@ export class MusicService {
     if (!music) throw new NotFoundException("Music not found");
     music.favorite = music.favoriteMusics ? music.favoriteMusics.length : null;
     music.view = music.musicHistories ? music.musicHistories.length : null;
-    music.composer = music?.id_composer ? music.id_composer : null;
+    music.composer = music?.id_composer?.name ? music.id_composer?.name : null;
+    music.id_composer = music?.id_composer?.id_composer
+      ? music.id_composer?.id_composer
+      : null;
 
     delete music.musicHistories;
     delete music.favoriteMusics;
-    delete music.id_composer;
 
     return { data: music };
   }

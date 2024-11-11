@@ -34,6 +34,7 @@ import { ComposerModule } from "./api/composer/composer.module";
 import { ChartModule } from './api/chart/chart.module';
 import { CommentModule } from './api/comment/comment.module';
 import { TopTypeModule } from './api/top-type/top-type.module';
+import { NotificationModule } from './api/notification/notification.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { TopTypeModule } from './api/top-type/top-type.module';
     ChartModule,
     CommentModule,
     TopTypeModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -111,7 +111,7 @@ CREATE TABLE Album (
     created_at DATETIME DEFAULT NOW(),
     last_update DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
     is_show TINYINT(1) DEFAULT 1,
-    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE Playlist (
@@ -121,15 +121,15 @@ CREATE TABLE Playlist (
     playlist_index integer default 0,
     created_at DATETIME DEFAULT NOW(),
     last_update DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE MusicArtistDetail (
     id_artist VARCHAR(36) NOT NULL,
     id_music VARCHAR(36) NOT NULL,
     PRIMARY KEY (id_artist, id_music),
-    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE MusicAlbumDetail (
@@ -137,8 +137,8 @@ CREATE TABLE MusicAlbumDetail (
     id_album VARCHAR(36) NOT NULL,
     index_order INT DEFAULT 0,
     PRIMARY KEY (id_music, id_album),
-    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_album) REFERENCES Album(id_album) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_album) REFERENCES Album(id_album) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE MusicPlaylistDetail (
@@ -154,8 +154,8 @@ CREATE TABLE MusicTypeDetail (
     id_music VARCHAR(36) NOT NULL,
     id_type VARCHAR(36) NOT NULL,
     PRIMARY KEY (id_music, id_type),
-    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_type) REFERENCES Type(id_type) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_type) REFERENCES Type(id_type) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE MusicHistory (
@@ -173,8 +173,8 @@ CREATE TABLE Follow (
     id_artist VARCHAR(36) NOT NULL,
     created_at DATETIME DEFAULT NOW(),
     PRIMARY KEY (id_user, id_artist),
-    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE FavoriteMusic (
@@ -182,8 +182,8 @@ CREATE TABLE FavoriteMusic (
     id_music VARCHAR(36) NOT NULL,
     last_update DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id_user, id_music),
-    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE FavoriteAlbum (
@@ -191,8 +191,8 @@ CREATE TABLE FavoriteAlbum (
     id_album VARCHAR(36) NOT NULL,
     last_update DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id_user, id_album),
-    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_album) REFERENCES Album(id_album) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES User(id_user) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (id_album) REFERENCES Album(id_album) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE Comment (
@@ -1298,7 +1298,16 @@ values
         true
     );
 
+insert into Follow (id_user, id_artist) values
+    ("u0001", "a0001"),
+    ("u0001", "a0002"),
+    ("u0001", "a0003"),
+    ("u0001", "a0004"),
+    ("u0001", "a0005");
+
 -- Add Type
+SELECT SLEEP(1);
+
 insert into
     Type (id_type, name, slug, is_show)
 values
@@ -2570,6 +2579,8 @@ values
     ('m0065', 't0009'),          -- What do you mean
     ('m0066', 't0009');          -- Stay
 
+SELECT SLEEP(1);
+
 -- Add album    
 INSERT INTO Album (id_album, name, slug, url_cover, id_artist)
 VALUES
@@ -2636,11 +2647,11 @@ VALUES
 --     ('m0001', 'Dừng lại và xoá nhẹ đi kí ức, ooh-ooh-ooh-ooh', 111, 117);
 
 insert into Follow (id_user, id_artist) values
-    ("u0001", "a0001"),
-    ("u0001", "a0002"),
-    ("u0001", "a0003"),
-    ("u0001", "a0004"),
-    ("u0001", "a0005"),
+    -- ("u0001", "a0001"),
+    -- ("u0001", "a0002"),
+    -- ("u0001", "a0003"),
+    -- ("u0001", "a0004"),
+    -- ("u0001", "a0005"),
     ("u0006", "a0007"),
     ("u0006", "a0008"),
     ("u0006", "a0009"),
