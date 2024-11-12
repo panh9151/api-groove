@@ -27,6 +27,6 @@ export class ChartService {
       .map(([day, view]) => ({ day, view }))
       .sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime()); // Simplified sorting
 
-    return formattedResult;
+    return { data: formattedResult };
   }
 }
