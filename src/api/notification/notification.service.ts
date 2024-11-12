@@ -143,6 +143,6 @@ export class NotificationService {
       })
       .sort((a, b) => b.time - a.time);
 
-    return result;
+    return { data: result };
   }
 }
