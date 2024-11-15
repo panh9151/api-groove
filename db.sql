@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS MusicHistory;
 
 DROP TABLE IF EXISTS MusicTypeDetail;
 
-DROP TABLE IF EXISTS Lyrics;
+-- DROP TABLE IF EXISTS Lyrics;
 
 DROP TABLE IF EXISTS MusicPlaylistDetail;
 

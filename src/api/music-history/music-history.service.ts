@@ -15,7 +15,7 @@ export class MusicHistoryService {
   ) {}
 
   async create(req: any, body: CreateMusicHistoryDto) {
-    const id_user = req.user.id_user;
+    const id_user = req?.user?.id_user || null;
     const { id_music, play_duration } = body;
     // Check existing music
     const music = await this.musicRepo.find({ where: { id_music } });
