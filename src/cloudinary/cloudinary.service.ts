@@ -7,19 +7,6 @@ const streamifier = require("streamifier");
 export class CloudinaryService {
   uploadFile(file: Express.Multer.File): Promise<CloudinaryResponse> {
     return new Promise<CloudinaryResponse>((resolve, reject) => {
-      // Log file information
-      //   console.log("Received file:", {
-      //     originalname: file?.originalname,
-      //     mimetype: file?.mimetype,
-      //     size: file?.size,
-      //     bufferLength: file?.buffer ? file?.buffer.length : 0,
-      //   });
-
-      // Check if the file and its buffer are valid
-      //   if (!file || !file?.buffer || file?.buffer.length === 0) {
-      //     return reject(new Error("Invalid file or file buffer"));
-      //   }
-
       const uploadStream = cloudinary.uploader.upload_stream(
         { resource_type: "auto" },
         (error, result) => {

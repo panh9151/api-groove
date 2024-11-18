@@ -33,7 +33,9 @@ export class ForgotPasswordService {
     await this.mailerService.sendMail({
       to: email,
       subject: "Reset Your Password",
-      text: `We received a request to reset your password. If you made this request, please click the link below to reset your password. If you did not request a password reset, please ignore this email or contact our support team if you have any concerns.\n\nReset link: ${resetLink}`, // path to your email template
+      text: `We received a request to reset your password. If you made this request, please click the link below to reset your password. 
+      If you did not request a password reset, please ignore this email or contact our support team if you have any concerns.
+      \n\nReset link: ${resetLink}`,
     });
 
     // Update db
