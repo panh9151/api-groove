@@ -166,7 +166,7 @@ export class AlbumService {
       .leftJoinAndSelect("album.musics", "musics")
       .leftJoinAndSelect("musics.music", "music")
       .leftJoinAndSelect("music.artists", "mad")
-      .leftJoinAndSelect("mad.artist", "artist")
+      .leftJoinAndSelect("mad.artist", "am")
       .andWhere("album.id_album = :id_album", { id_album: id });
 
     const result: any = await album.getOne();
