@@ -110,8 +110,7 @@ export class AlbumService {
       .leftJoinAndSelect("musics.music", "music")
       .leftJoinAndSelect("music.artists", "mad")
       .leftJoinAndSelect("mad.artist", "am")
-      .leftJoinAndSelect("music.id_composer", "composer")
-      .leftJoinAndSelect("musics.music", "music");
+      .leftJoinAndSelect("music.id_composer", "composer");
 
     // Apply filters based on the parameters
     const getByParam = (
