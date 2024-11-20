@@ -107,6 +107,10 @@ export class AlbumService {
       .createQueryBuilder("album")
       .leftJoinAndSelect("album.artist", "artist")
       .leftJoinAndSelect("album.musics", "musics")
+      .leftJoinAndSelect("musics.music", "music")
+      .leftJoinAndSelect("music.artists", "mad")
+      .leftJoinAndSelect("mad.artist", "am")
+      .leftJoinAndSelect("music.id_composer", "composer")
       .leftJoinAndSelect("musics.music", "music");
 
     // Apply filters based on the parameters
