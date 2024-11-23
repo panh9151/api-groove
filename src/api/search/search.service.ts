@@ -1,3 +1,4 @@
+import { Composer } from "./../../api-entity/Composer.entity";
 import { ApiOperation } from "@nestjs/swagger";
 import { Album } from "./../../api-entity/Album.entity";
 import { Artist } from "./../../api-entity/Artist.entity";
@@ -11,6 +12,7 @@ export class SearchService {
   constructor(
     @InjectRepository(Music) private readonly musicRepo: Repository<Music>,
     @InjectRepository(Artist) private readonly artistRepo: Repository<Artist>,
+    @InjectRepository(Composer) private readonly composerRepo: Repository<Composer>,
     @InjectRepository(Album) private readonly albumRepo: Repository<Album>
   ) {}
 
@@ -27,19 +29,17 @@ export class SearchService {
       .leftJoinAndSelect("mad.artist", "artist")
       .leftJoinAndSelect("music.types", "mtd")
       .leftJoinAndSelect("mtd.type", "type")
-      .andWhere(
+      .leftJoinAndSelect("music.id_composer", "composer")
+      .orWhere(
         `
         (
           (music.name LIKE CONCAT('%', '${search_text}', '%')
           OR music.id_music = '${search_text}')
         )
         `
-      );
-
+      ).orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`);
     role !== "admin" && musicRepo.andWhere("music.is_show = 1");
-
     const musicList: any[] = await musicRepo.getMany();
-
     musicList.map((music) => {
       music.artists = music.artists.map((artist) => {
         return artist.artist;
@@ -66,11 +66,8 @@ export class SearchService {
         `,
         { search_text: `%${search_text}%`, _search_text: search_text }
       );
-
     role !== "admin" && albumRepo.andWhere("album.is_show = 1");
-
     const albumList: any[] = await albumRepo.getMany();
-
     albumList.map((album) => {
       album.musics = album.musics.map((music) => {
         return {
@@ -88,16 +85,23 @@ export class SearchService {
         `,
       { search_text: `%${search_text}%`, _search_text: search_text }
     );
-
     role !== "admin" && artistRepo.andWhere("artist.is_show = 1");
-
     const artistList = await artistRepo.getMany();
+
+    // Search by composer name/id_composer
+    const composerRepo = 
+      this.composerRepo
+      .createQueryBuilder("composer")
+      .orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`)
+      .orWhere(`composer.id_composer = '${search_text}'`)
+    const composerList = await composerRepo.getMany()
 
     return {
       data: {
         musicList,
         albumList,
         artistList,
+        composerList
       },
     };
   }

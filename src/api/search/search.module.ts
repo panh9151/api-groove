@@ -1,3 +1,4 @@
+import { Composer } from './../../api-entity/Composer.entity';
 import { Artist } from "./../../api-entity/Artist.entity";
 import { Album } from "./../../api-entity/Album.entity";
 import { Music } from "./../../api-entity/Music.entity";
@@ -7,7 +8,7 @@ import { SearchController } from "./search.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Music, Album, Artist])],
+  imports: [TypeOrmModule.forFeature([Music, Album, Artist, Composer])],
   controllers: [SearchController],
   providers: [SearchService],
 })
