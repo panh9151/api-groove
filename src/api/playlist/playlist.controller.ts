@@ -49,8 +49,8 @@ export class PlaylistController {
     description: "Music không tồn tại trong playlist",
   })
   @ApiResponse({ status: 500, description: "Lỗi server" })
-  removeMusic(@Body() body: DeleteMusicDto, @Request() req: any) {
-    return this.playlistService.removeMusic(req, body);
+  removeMusic(@Query("id_playlist") id_playlist: string, @Query("id_music") id_music: string, @Request() req: any) {
+    return this.playlistService.removeMusic(req, id_music, id_playlist);
   }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ export class PlaylistController {
     description: "ID playlist không tồn tại hoặc user không sở hữu playlist",
   })
   @ApiResponse({ status: 500, description: "Lỗi server" })
-  remove(@Body() body: DeletePlaylistDto, @Request() req: any) {
-    return this.playlistService.removePlaylist(body, req);
+  remove(@Query("id_playlist") id_playlist: string, @Request() req: any) {
+    return this.playlistService.removePlaylist(id_playlist, req);
   }
 }

@@ -23,9 +23,8 @@ export class PlaylistService {
     private readonly musicPlaylistDetail: Repository<MusicPlaylistDetail>
   ) {}
 
-  async removeMusic(req: any, body: DeletePlaylistDto) {
+  async removeMusic(req: any, id_music, id_playlist) {
     const id_user = req.user.id_user;
-    const { id_music, id_playlist } = body;
 
     // check if user own the playlist
     const userPlaylist = await this.playlistRepo
@@ -190,8 +189,7 @@ export class PlaylistService {
     return { message: "Playlist updated successfully" };
   }
 
-  async removePlaylist(body: DeletePlaylistDto, req: any) {
-    const { id_playlist } = body;
+  async removePlaylist(id_playlist, req: any) {
     const id_user = req.user.id_user;
 
     // Kiểm tra xem playlist có tồn tại và thuộc về user hiện tại không
