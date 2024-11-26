@@ -94,6 +94,7 @@ export class SearchService {
       .createQueryBuilder("composer")
       .orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`)
       .orWhere(`composer.id_composer = '${search_text}'`)
+      .leftJoinAndSelect("composer.musics", "music")
     const composerList = await composerRepo.getMany()
 
     return {

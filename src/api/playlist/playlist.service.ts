@@ -136,7 +136,9 @@ export class PlaylistService {
       .createQueryBuilder("playlist")
       .andWhere("playlist.id_user = :id_user", { id_user })
       .leftJoinAndSelect("playlist.musics", "mpd")
-      .leftJoinAndSelect("mpd.music", "music");
+      .leftJoinAndSelect("mpd.music", "music")
+      .leftJoinAndSelect("music.artists", "mad")
+      .leftJoinAndSelect("mad.artist", "artist");
 
     id_playlist &&
       playlistRepo.andWhere("playlist.id_playlist = :id_playlist", {

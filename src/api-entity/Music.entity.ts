@@ -7,6 +7,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  JoinTable,
 } from "typeorm";
 import { MusicTypeDetail } from "./MusicTypeDetail.entity";
 import { MusicHistory } from "./MusicHistory.entity";
@@ -53,7 +54,7 @@ export class Music {
 
   // Relations
   @ManyToOne(() => Composer, (composer) => composer.musics)
-  @JoinColumn({ name: "composer" })
+  @JoinColumn({name: "composer"})
   id_composer: Composer;
 
   @OneToMany(() => MusicHistory, (musicHistory) => musicHistory.music)

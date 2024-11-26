@@ -43,7 +43,7 @@ export class LoginService {
 
     const accessToken = await new SignJWT({ id: user.id_user })
       .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("10000h")
+      .setExpirationTime("24h")
       // .setExpirationTime("24h")
       .sign(this.secretToken);
     return { accessToken };

@@ -33,6 +33,7 @@ export class ComposerService {
     const composer = await this.composerRepo
       .createQueryBuilder("composer")
       .andWhere("composer.id_composer = :id", { id })
+      .leftJoinAndSelect("composer.musics", "music")
       .getOne();
 
     return { data: composer };

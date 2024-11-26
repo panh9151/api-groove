@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Music } from "./Music.entity";
 
@@ -22,6 +23,6 @@ export class Composer {
   @UpdateDateColumn({ type: "datetime", onUpdate: "CURRENT_TIMESTAMP" })
   last_update: string;
 
-  @OneToMany(() => Music, (music) => music.composer)
+  @OneToMany(() => Music, (music) => music.id_composer)
   musics: Music[];
 }
