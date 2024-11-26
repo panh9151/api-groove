@@ -151,7 +151,7 @@ export class UserService {
         "user.last_update",
         "user.is_banned",
         "user.id_google",
-      ]);
+      ]).andWhere("user.id_user = :id", {id});
 
     return { data: await userRepo.getOne() };
   }
