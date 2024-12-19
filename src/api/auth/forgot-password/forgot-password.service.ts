@@ -25,7 +25,7 @@ export class ForgotPasswordService {
     }
 
     // Get reset link
-    const resetLink = `http://localhost:3000/reset-password/` + resetToken;
+    const resetLink = `https://groove-puce.vercel.app/reset-password/` + resetToken;
     // const resetLink =
     //   `${req.protocol}://${req.get("host")}/reset-password/` + resetToken;
 
