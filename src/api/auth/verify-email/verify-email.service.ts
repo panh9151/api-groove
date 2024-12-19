@@ -32,6 +32,6 @@ export class VerifyEmailService {
       text: `We have received your account registration request with this email address. To complete the registration process, please confirm your email address by entering the verification code. \n\nVerification code: ${randomCode}`,
     });
 
-    return { message: "Verify code sended" };
+    return { message: "Verify code sended", code: randomCode };
   }
 }
