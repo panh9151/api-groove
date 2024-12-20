@@ -137,7 +137,9 @@ export class PlaylistService {
       .leftJoinAndSelect("playlist.musics", "mpd")
       .leftJoinAndSelect("mpd.music", "music")
       .leftJoinAndSelect("music.artists", "mad")
-      .leftJoinAndSelect("mad.artist", "artist");
+      .leftJoinAndSelect("mad.artist", "artist")
+      .leftJoinAndSelect("music.id_composer", "id_composer")
+      ;
 
     id_playlist &&
       playlistRepo.andWhere("playlist.id_playlist = :id_playlist", {
