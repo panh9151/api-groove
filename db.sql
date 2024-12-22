@@ -30,6 +30,8 @@ DROP TABLE IF EXISTS Playlist;
 
 DROP TABLE IF EXISTS Album;
 
+DROP TABLE IF EXISTS Lyrics;
+
 DROP TABLE IF EXISTS Music;
 
 DROP TABLE IF EXISTS Composer;
@@ -56,7 +58,9 @@ CREATE TABLE User (
     is_banned TINYINT(1) DEFAULT 0,
     id_google varchar(255),
     reset_token VARCHAR(255),
-    reset_token_expired bigint(20)
+    reset_token_expired bigint(20),
+    vip_code varchar(36) default uuid(),
+    is_vip tinyint(1) default 0
 );
 
 CREATE TABLE Artist (
@@ -90,6 +94,15 @@ CREATE TABLE Music (
     last_update DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
     is_show TINYINT(1) DEFAULT 1,
     FOREIGN KEY (composer) REFERENCES Composer(id_composer) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+CREATE TABLE Lyrics (
+    id_lyrics VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
+    id_music VARCHAR(36) NOT NULL,
+    lyrics TEXT,
+    start_time INT DEFAULT 0,
+    end_time INT DEFAULT 0,
+    FOREIGN KEY (id_music) REFERENCES Music(id_music) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Type (
@@ -298,6 +311,21 @@ INSERT INTO
     )
 VALUES
     (
+        'u0000',
+        'Du Văn Sơ',
+        'user@gmail.com',
+        '$2a$12$FuDE3q6FuHB1wwrN9OACCu1rS0R67uMVDkuYrB5iqhjwesgt8YhK2',
+        'user',
+        NULL,
+        'male',
+        NULL,
+        '2003-12-25',
+        'VN',
+        "2024-08-17T15:11:11z",
+        "2024-08-17T15:11:11z",
+        0
+    ),
+    (
         'u0001',
         'Phạm Tuấn Anh',
         'anhpt2611@gmail.com',
@@ -371,6 +399,41 @@ VALUES
         "2024-08-17T15:11:11z",
         "2024-08-17T15:11:11z",
         0
+    );
+
+INSERT INTO
+    User (
+        id_user,
+        fullname,
+        email,
+        password,
+        role,
+        phone,
+        gender,
+        url_avatar,
+        birthday,
+        country,
+        created_at,
+        last_update,
+        is_banned,
+        is_vip
+    )
+VALUES
+    (
+        'u00000',
+        'Vy Văn Víp',
+        'vip@gmail.com',
+        '$2a$12$FuDE3q6FuHB1wwrN9OACCu1rS0R67uMVDkuYrB5iqhjwesgt8YhK2',
+        'user',
+        NULL,
+        'male',
+        NULL,
+        '2003-12-25',
+        'VN',
+        "2024-08-17T15:11:11z",
+        "2024-08-17T15:11:11z",
+        0,
+        1
     );
 
 insert into
@@ -13745,3 +13808,25 @@ insert into MusicHistory (id_music_history, id_user, id_music, play_duration, cr
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('b4c8443f-a6fe-41fc-940b-f1224cfa9098', 'u0004', 'm0027', 430, '2024-02-09T03:23:51Z');
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('ec7737ac-7fc2-4bb0-afa9-01b27d3fe0bf', null, 'm0055', 521, '2024-02-20T20:02:27Z');
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('7d6af263-27db-453e-9d45-7765a900582a', null, 'm0024', 422, '2024-08-09T23:31:38Z');
+
+INSERT INTO Lyrics (id_music, lyrics, start_time, end_time)
+VALUES
+    ('m0001', 'Yeah, yeah, yeah', 0, 4),
+    ('m0001', 'Em đang nơi nào?', 5, 9),
+    ('m0001', '(Can you tell me?) Nơi nào? Nơi nào?', 10, 14),
+    ('m0001', '(Can you tell me?) Nơi nào? Nơi nào?', 15, 19),
+    ('m0001', 'Yeah, yeah, yeah (MTP)', 20, 24),
+    ('m0001', 'Liệu rằng chia tay trong em có quên được câu ca?', 25, 30),
+    ('m0001', 'Tình yêu khi xưa em trao cho anh đâu nào phôi pha', 31, 36),
+    ('m0001', 'Đừng lừa dối con tim anh, em sẽ không buông tay anh được đâu mà (em không thể buông)', 37, 43),
+    ('m0001', 'Gạt nước mắt, yếu đuối đó cứ quay lại nơi anh', 44, 49),
+    ('m0001', 'Em biết rằng cơn mưa qua đâu có che lấp được nụ cười đau thương kia', 50, 57),
+    ('m0001', 'Nước mắt đó vẫn rơi vì em, oh baby, no baby', 58, 63),
+    ('m0001', 'Đừng nhìn anh nữa, đôi mắt ngày xưa giờ ở đâu, em còn là em?', 64, 70),
+    ('m0001', 'Em đã khác rồi, em muốn quay lưng, quên hết đi (thật vậy sao?)', 71, 76),
+    ('m0001', 'Tình yêu trong em giờ toàn giả dối, anh không muốn vùi mình trong mơ', 77, 83),
+    ('m0001', 'Anh không muốn đi tìm giấc mơ ngày hôm nao', 84, 89),
+    ('m0001', 'Đừng vội vàng, em hãy là em của ngày hôm qua, ooh-ooh-ooh-ooh', 90, 97),
+    ('m0001', 'Xin hãy là em của ngày hôm qua, ooh-ooh-ooh-ooh', 98, 103),
+    ('m0001', 'Đừng bỏ mặc anh một mình nơi đây, ooh-ooh-ooh-ooh', 104, 110),
+    ('m0001', 'Dừng lại và xoá nhẹ đi kí ức, ooh-ooh-ooh-ooh', 111, 117);

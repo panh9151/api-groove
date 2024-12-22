@@ -42,4 +42,10 @@ export class Profile {
 
   @Column()
   id_google: string;
+
+  @Column()
+  is_vip: string;
+
+  @Column()
+  vip_code: string;
 }

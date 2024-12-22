@@ -35,6 +35,7 @@ import { ChartModule } from './api/chart/chart.module';
 import { CommentModule } from './api/comment/comment.module';
 import { TopTypeModule } from './api/top-type/top-type.module';
 import { NotificationModule } from './api/notification/notification.module';
+import { CompletePaymentModule } from './api/complete-payment/complete-payment.module';
 
 @Module({
   imports: [
@@ -92,6 +93,7 @@ import { NotificationModule } from './api/notification/notification.module';
     CommentModule,
     TopTypeModule,
     NotificationModule,
+    CompletePaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

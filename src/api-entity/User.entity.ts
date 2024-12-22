@@ -20,6 +20,12 @@ export class User {
   @Column({ type: "enum", enum: ["user", "admin"], default: "user" })
   role: "user" | "admin";
 
+  @Column()
+  is_vip: boolean;
+
+  @Column()
+  vip_code: boolean;
+
   @Column({ type: "varchar", length: 255 })
   fullname: string;
 
