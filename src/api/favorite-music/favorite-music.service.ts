@@ -72,7 +72,7 @@ export class FavoriteMusicService {
       const last_update = music.music.last_update;
       const artists = music.music.artists.map((artist) => artist.artist);
       const types = music.music.types.map((type) => type.type);
-      const composer = music.music.id_composer.name;
+      const composer = music.music?.id_composer?.name;
 
       delete music.music.artists;
       delete music.music.types;
