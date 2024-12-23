@@ -31,11 +31,11 @@ import { PlaylistModule } from "./api/playlist/playlist.module";
 import { RankingModule } from "./api/ranking/ranking.module";
 import { SearchModule } from "./api/search/search.module";
 import { ComposerModule } from "./api/composer/composer.module";
-import { ChartModule } from './api/chart/chart.module';
-import { CommentModule } from './api/comment/comment.module';
-import { TopTypeModule } from './api/top-type/top-type.module';
-import { NotificationModule } from './api/notification/notification.module';
-import { CompletePaymentModule } from './api/complete-payment/complete-payment.module';
+import { ChartModule } from "./api/chart/chart.module";
+import { CommentModule } from "./api/comment/comment.module";
+import { TopTypeModule } from "./api/top-type/top-type.module";
+import { NotificationModule } from "./api/notification/notification.module";
+// import { CompletePaymentModule } from './api/complete-payment/complete-payment.module';
 
 @Module({
   imports: [
@@ -93,7 +93,7 @@ import { CompletePaymentModule } from './api/complete-payment/complete-payment.m
     CommentModule,
     TopTypeModule,
     NotificationModule,
-    CompletePaymentModule,
+    // CompletePaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
