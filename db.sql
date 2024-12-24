@@ -420,7 +420,7 @@ INSERT INTO
     )
 VALUES
     (
-        'u00000',
+        'u00000', 
         'Vy Văn Víp',
         'vip@gmail.com',
         '$2a$12$FuDE3q6FuHB1wwrN9OACCu1rS0R67uMVDkuYrB5iqhjwesgt8YhK2',
@@ -1804,7 +1804,7 @@ values
     
     -- Từ chối nhẹ nhàng thôi (V-Pop)
     ('m0019', 't0001');
-
+SELECT SLEEP(1);
 -- Trúc Nhân
 insert into
     Music (
@@ -1888,7 +1888,7 @@ values
         null,
         1
     );
-
+SELECT SLEEP(1);
 --
 insert into MusicArtistDetail (id_artist, id_music)
 values
@@ -2560,7 +2560,7 @@ values
     ('m0059', 't0009'),        -- Roar
     ('m0060', 't0009'),        -- Dark horse
     ('m0061', 't0009');        -- Hot N Cold
-
+SELECT SLEEP(1);
 -- Alan Walker
 insert into
     Music (
