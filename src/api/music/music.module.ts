@@ -8,6 +8,7 @@ import { MusicService } from "./music.service";
 import { MusicController } from "./music.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Composer } from "../../api-entity/Composer.entity";
+import { Lyrics } from "../../api-entity/Lyrics.entity";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { Composer } from "../../api-entity/Composer.entity";
       Artist,
       Type,
       Composer,
+      Lyrics,
     ]),
   ],
   controllers: [MusicController],

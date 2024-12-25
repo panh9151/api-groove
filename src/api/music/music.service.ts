@@ -13,6 +13,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Music } from "../../api-entity/Music.entity";
 import { Composer } from "../../api-entity/Composer.entity";
+import { Lyrics } from "../../api-entity/Lyrics.entity";
 
 @Injectable()
 export class MusicService {
@@ -28,7 +29,9 @@ export class MusicService {
     @InjectRepository(Type)
     private readonly typeRepo: Repository<Type>,
     @InjectRepository(Composer)
-    private readonly composerRepo: Repository<Composer>
+    private readonly composerRepo: Repository<Composer>,
+    @InjectRepository(Lyrics)
+    private readonly lyricsRepo: Repository<Lyrics>
   ) {}
 
   async create(body: CreateMusicDto) {
@@ -242,6 +245,8 @@ export class MusicService {
 
     delete music.musicHistories;
     delete music.favoriteMusics;
+
+    music.lyrics = await this.lyricsRepo.find({ where: { id_music: id } });
 
     return { data: music };
   }
