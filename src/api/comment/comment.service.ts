@@ -45,10 +45,11 @@ export class CommentService {
     commentList = commentList.map((comment) => {
       const user = comment.user.fullname;
       const user_url = comment.user.url_avatar;
+      const id_user = comment.user.id_user;
       delete comment.user;
       return {
         user,
-        user_url,
+        id_user,
         ...comment,
       };
     });
