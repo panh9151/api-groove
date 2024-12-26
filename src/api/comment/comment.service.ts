@@ -70,4 +70,12 @@ export class CommentService {
     }
     return { message: `Comment removed successfully` };
   }
+
+  async findMe(req) {
+    const commentList = await this.commentRepo.find({
+      where: { id_user: req?.user?.id_user },
+    });
+
+    return commentList;
+  }
 }

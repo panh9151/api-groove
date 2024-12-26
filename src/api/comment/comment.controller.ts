@@ -71,6 +71,13 @@ export class CommentController {
     return this.commentService.findAll(id_music);
   }
 
+  /////////////////////////////////////////////////////////////////////////////
+  @Get("me")
+  @UseGuards(UserGuard)
+  findMe(@Request() req: any) {
+    return this.commentService.findMe(req);
+  }
+
   ///////////////////////////////////////////////////////////////////////////////
   @UseGuards(UserGuard)
   @Delete(":id")
