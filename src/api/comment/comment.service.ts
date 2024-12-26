@@ -76,6 +76,6 @@ export class CommentService {
       where: { id_user: req?.user?.id_user },
     });
 
-    return commentList;
+    return { data: commentList };
   }
 }
