@@ -12,7 +12,8 @@ export class SearchService {
   constructor(
     @InjectRepository(Music) private readonly musicRepo: Repository<Music>,
     @InjectRepository(Artist) private readonly artistRepo: Repository<Artist>,
-    @InjectRepository(Composer) private readonly composerRepo: Repository<Composer>,
+    @InjectRepository(Composer)
+    private readonly composerRepo: Repository<Composer>,
     @InjectRepository(Album) private readonly albumRepo: Repository<Album>
   ) {}
 
@@ -37,7 +38,16 @@ export class SearchService {
           OR music.id_music = '${search_text}')
         )
         `
-      ).orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`);
+      )
+      .orWhere(
+        `
+        (
+          (artist.name LIKE CONCAT('%', '${search_text}', '%')
+          OR artist.id_artist = '${search_text}')
+        )
+        `
+      )
+      .orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`);
     role !== "admin" && musicRepo.andWhere("music.is_show = 1");
     const musicList: any[] = await musicRepo.getMany();
     musicList.map((music) => {
@@ -89,20 +99,19 @@ export class SearchService {
     const artistList = await artistRepo.getMany();
 
     // Search by composer name/id_composer
-    const composerRepo = 
-      this.composerRepo
+    const composerRepo = this.composerRepo
       .createQueryBuilder("composer")
       .orWhere(`composer.name like CONCAT('%', '${search_text}', '%')`)
       .orWhere(`composer.id_composer = '${search_text}'`)
-      .leftJoinAndSelect("composer.musics", "music")
-    const composerList = await composerRepo.getMany()
+      .leftJoinAndSelect("composer.musics", "music");
+    const composerList = await composerRepo.getMany();
 
     return {
       data: {
         musicList,
         albumList,
         artistList,
-        composerList
+        composerList,
       },
     };
   }
