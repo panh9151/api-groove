@@ -44,6 +44,7 @@ export class CommentService {
 
     commentList = commentList.map((comment) => {
       const user = comment.user.fullname;
+      const user_url = comment.user.url_path;
       delete comment.user;
       return {
         user,
