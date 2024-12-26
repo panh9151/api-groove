@@ -50,6 +50,7 @@ export class CommentService {
       return {
         user,
         id_user,
+        user_url,
         ...comment,
       };
     });
