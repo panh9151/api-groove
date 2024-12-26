@@ -48,6 +48,7 @@ export class CommentService {
       delete comment.user;
       return {
         user,
+        user_url,
         ...comment,
       };
     });
