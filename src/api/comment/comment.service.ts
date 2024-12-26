@@ -71,9 +71,9 @@ export class CommentService {
     return { message: `Comment removed successfully` };
   }
 
-  async findMe(req) {
+  async findMe(req, id_music) {
     const commentList = await this.commentRepo.find({
-      where: { id_user: req?.user?.id_user },
+      where: { id_user: req?.user?.id_user, id_music, is_show: 1 },
     });
 
     return { data: commentList };

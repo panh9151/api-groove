@@ -74,8 +74,8 @@ export class CommentController {
   /////////////////////////////////////////////////////////////////////////////
   @Get("me")
   @UseGuards(UserGuard)
-  findMe(@Request() req: any) {
-    return this.commentService.findMe(req);
+  findMe(@Request() req: any, @Query("id_music") id_music: string) {
+    return this.commentService.findMe(req, id_music);
   }
 
   ///////////////////////////////////////////////////////////////////////////////
