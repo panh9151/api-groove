@@ -1,4 +1,3 @@
-import { FavoriteMusic } from "src/api-entity/FavoriteMusic.entity";
 import { Type } from "./../../api-entity/Type.entity";
 import { Artist } from "./../../api-entity/Artist.entity";
 import { MusicTypeDetail } from "./../../api-entity/MusicTypeDetail.entity";
@@ -15,7 +14,6 @@ import { Repository } from "typeorm";
 import { Music } from "../../api-entity/Music.entity";
 import { Composer } from "../../api-entity/Composer.entity";
 import { Lyrics } from "../../api-entity/Lyrics.entity";
-import { MusicHistory } from "../../api-entity/MusicHistory.entity";
 
 @Injectable()
 export class MusicService {
@@ -33,11 +31,7 @@ export class MusicService {
     @InjectRepository(Composer)
     private readonly composerRepo: Repository<Composer>,
     @InjectRepository(Lyrics)
-    private readonly lyricsRepo: Repository<Lyrics>,
-    @InjectRepository(MusicHistory)
-    private readonly historyRepo: Repository<MusicHistory>,
-    @InjectRepository(FavoriteMusic)
-    private readonly fmRepo: Repository<FavoriteMusic>
+    private readonly lyricsRepo: Repository<Lyrics>
   ) {}
 
   async create(body: CreateMusicDto) {
@@ -149,11 +143,10 @@ export class MusicService {
     id_artist,
     req: any
   ) {
-    const times = [];
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
-      // .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
-      // .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
+      .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
+      .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
       .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
       .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
@@ -195,7 +188,7 @@ export class MusicService {
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
 
     // Group by id_music
-    // musicRepo.groupBy("music.id_music, mh.id_music_history");
+    musicRepo.groupBy("music.id_music, mh.id_music_history");
 
     // Apply limit and offset
     limit && musicRepo.take(limit);
@@ -205,41 +198,24 @@ export class MusicService {
     let musics: any[] = await musicRepo.getMany();
 
     //Parse data
-    // musics = musics.map((music) => {
-    //   music.favorite = music.favoriteMusics
-    //     ? music.favoriteMusics.length
-    //     : null;
-    //   music.view = music.musicHistories ? music.musicHistories.length : null;
-    //   // music.composer = music.id_composer ? music.id_composer : null;
-    //   music.composer = music?.id_composer?.name ? music.id_composer.name : null;
-    //   music.id_composer = music?.id_composer?.id_composer
-    //     ? music.id_composer.id_composer
-    //     : null;
+    musics = musics.map((music) => {
+      music.favorite = music.favoriteMusics
+        ? music.favoriteMusics.length
+        : null;
+      music.view = music.musicHistories ? music.musicHistories.length : null;
+      // music.composer = music.id_composer ? music.id_composer : null;
+      music.composer = music?.id_composer?.name ? music.id_composer.name : null;
+      music.id_composer = music?.id_composer?.id_composer
+        ? music.id_composer.id_composer
+        : null;
 
-    //   delete music.musicHistories;
-    //   delete music.favoriteMusics;
+      delete music.musicHistories;
+      delete music.favoriteMusics;
 
-    //   return music;
-    // });
+      return music;
+    });
 
-    await Promise.all(
-      musics.map(async (i) => {
-        const view = await this.historyRepo.find({
-          where: { id_music: i.id_music },
-        });
-        const favorite = await this.fmRepo.find({
-          where: { id_music: i.id_music },
-        });
-        i.composer = i?.id_composer?.name ? i.id_composer.name : null;
-        i.id_composer = i?.id_composer?.id_composer
-          ? i.id_composer.id_composer
-          : null;
-        i.view = view.length; // Lưu trữ số lượng kết quả
-        i.favorite = favorite.length; // Lưu trữ số lượng kết quả
-      })
-    );
-
-    return { times, data: musics };
+    return { data: musics };
   }
 
   async findOne(id: string, req: any) {
