@@ -138,9 +138,7 @@ export class PlaylistService {
       .leftJoinAndSelect("mpd.music", "music")
       .leftJoinAndSelect("music.artists", "mad")
       .leftJoinAndSelect("mad.artist", "artist")
-      .leftJoinAndSelect("music.id_composer", "id_composer")
-      ;
-
+      .leftJoinAndSelect("music.id_composer", "id_composer");
     id_playlist &&
       playlistRepo.andWhere("playlist.id_playlist = :id_playlist", {
         id_playlist,
@@ -200,7 +198,7 @@ export class PlaylistService {
     });
 
     if (!playlist) {
-      throw new Error("Playlist not found or not owned by user");
+      throw new NotFoundException("Playlist not found or not owned by user");
     }
 
     // Xóa playlist

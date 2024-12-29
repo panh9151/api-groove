@@ -92,6 +92,7 @@ export class UserService {
         "user.last_update",
         "user.is_banned",
         "user.id_google",
+        "user.is_vip",
       ]);
 
     // Apply filters based on the parameters
@@ -151,7 +152,9 @@ export class UserService {
         "user.last_update",
         "user.is_banned",
         "user.id_google",
-      ]).andWhere("user.id_user = :id", {id});
+        "user.is_vip",
+      ])
+      .andWhere("user.id_user = :id", { id });
 
     return { data: await userRepo.getOne() };
   }
