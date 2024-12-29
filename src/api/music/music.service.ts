@@ -150,8 +150,6 @@ export class MusicService {
     req: any
   ) {
     const times = [];
-    const start = performance.now();
-    times.push(performance.now() - start);
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
       // .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
@@ -223,7 +221,6 @@ export class MusicService {
 
     //   return music;
     // });
-    times.push(performance.now() - start);
 
     await Promise.all(
       musics.map(async (i) => {
@@ -241,8 +238,6 @@ export class MusicService {
         i.favorite = favorite.length; // Lưu trữ số lượng kết quả
       })
     );
-
-    times.push(performance.now() - start);
 
     return { times, data: musics };
   }
