@@ -29,7 +29,7 @@ export class Artist {
   last_update: string;
 
   @Column({ type: "tinyint", default: 1 })
-  is_show: boolean;
+  is_show: number;
 
   // Mối quan hệ OneToMany giữa Artist và Album
   @OneToMany(() => Album, (album) => album.artist)

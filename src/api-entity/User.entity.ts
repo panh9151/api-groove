@@ -21,10 +21,10 @@ export class User {
   role: "user" | "admin";
 
   @Column()
-  is_vip: boolean;
+  is_vip: number;
 
   @Column()
-  vip_code: boolean;
+  vip_code: number;
 
   @Column({ type: "varchar", length: 255 })
   fullname: string;
