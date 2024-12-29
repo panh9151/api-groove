@@ -9,6 +9,8 @@ import { MusicController } from "./music.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Composer } from "../../api-entity/Composer.entity";
 import { Lyrics } from "../../api-entity/Lyrics.entity";
+import { MusicHistory } from "../../api-entity/MusicHistory.entity";
+import { FavoriteMusic } from "../../api-entity/FavoriteMusic.entity";
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { Lyrics } from "../../api-entity/Lyrics.entity";
       Type,
       Composer,
       Lyrics,
+      MusicHistory,
+      FavoriteMusic,
     ]),
   ],
   controllers: [MusicController],
