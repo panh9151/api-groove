@@ -14,6 +14,8 @@ import { Repository } from "typeorm";
 import { Music } from "../../api-entity/Music.entity";
 import { Composer } from "../../api-entity/Composer.entity";
 import { Lyrics } from "../../api-entity/Lyrics.entity";
+import { MusicHistory } from "../../api-entity/MusicHistory.entity";
+import { FavoriteMusic } from "../../api-entity/FavoriteMusic.entity";
 
 @Injectable()
 export class MusicService {
@@ -31,7 +33,11 @@ export class MusicService {
     @InjectRepository(Composer)
     private readonly composerRepo: Repository<Composer>,
     @InjectRepository(Lyrics)
-    private readonly lyricsRepo: Repository<Lyrics>
+    private readonly lyricsRepo: Repository<Lyrics>,
+    @InjectRepository(MusicHistory)
+    private readonly historyRepo: Repository<MusicHistory>,
+    @InjectRepository(FavoriteMusic)
+    private readonly favoriteRepo: Repository<FavoriteMusic>
   ) {}
 
   async create(body: CreateMusicDto) {
@@ -145,8 +151,8 @@ export class MusicService {
   ) {
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
-      .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
-      .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
+      // .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
+      // .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
       .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
       .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
@@ -188,7 +194,7 @@ export class MusicService {
     req?.user?.role !== "admin" && musicRepo.andWhere("music.is_show = 1", {});
 
     // Group by id_music
-    musicRepo.groupBy("music.id_music, mh.id_music_history");
+    // musicRepo.groupBy("music.id_music, mh.id_music_history");
 
     // Apply limit and offset
     limit && musicRepo.take(limit);
@@ -197,20 +203,35 @@ export class MusicService {
     // Get data
     let musics: any[] = await musicRepo.getMany();
 
-    //Parse data
+    //Parse
+    // const views: any = await this.historyRepo.count({ where: { id_music } });
+    const views = await this.historyRepo
+      .createQueryBuilder("history")
+      .select("id_music")
+      .addSelect("COUNT(*)", "views")
+      .groupBy("id_music")
+      .getRawMany();
+    const favorites = await this.favoriteRepo
+      .createQueryBuilder("favorite")
+      .select("id_music")
+      .addSelect("COUNT(*)", "views")
+      .groupBy("id_music")
+      .getRawMany();
+
     musics = musics.map((music) => {
-      music.favorite = music.favoriteMusics
-        ? music.favoriteMusics.length
-        : null;
-      music.view = music.musicHistories ? music.musicHistories.length : null;
-      // music.composer = music.id_composer ? music.id_composer : null;
+      music.favorite = favorites.find(
+        (item) => item.id_music === music.id_music
+      )?.views;
+      music.view = views.find(
+        (item) => item.id_music === music.id_music
+      )?.views;
+
+      // music.favorite = music.favorite.views;
+      // music.view = music.favorite.views;
       music.composer = music?.id_composer?.name ? music.id_composer.name : null;
       music.id_composer = music?.id_composer?.id_composer
         ? music.id_composer.id_composer
         : null;
-
-      delete music.musicHistories;
-      delete music.favoriteMusics;
 
       return music;
     });
