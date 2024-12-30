@@ -168,9 +168,9 @@ export class ArtistService {
   async remove(id: string) {
     const result = await this.artistRepository.delete(id);
 
-    if (result.affected === 0) {
-      throw new NotFoundException(`Artist not found`);
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException(`Artist not found`);
+    // }
 
     return { message: "Delete artist successfully" };
   }

@@ -150,10 +150,10 @@ export class TypeService {
     // Kiểm tra xem bản ghi có tồn tại không
     const result = await this.typeRepository.delete(id);
 
-    if (result.affected === 0) {
-      throw new NotFoundException(`Type not found`);
-    } else {
-      return { message: "Deleted successfully" };
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException(`Type not found`);
+    // } else {
+    // }
+    return { message: "Deleted successfully" };
   }
 }

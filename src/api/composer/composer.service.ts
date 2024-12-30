@@ -42,9 +42,9 @@ export class ComposerService {
   async update(id: string, body: UpdateComposerDto) {
     const result = await this.composerRepo.update(id, body);
 
-    if (result.affected === 0) {
-      throw new NotFoundException(`Composer not found`);
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException(`Composer not found`);
+    // }
 
     return { message: `Composer updated successfully` };
   }
@@ -52,9 +52,9 @@ export class ComposerService {
   async remove(id: string) {
     const result = await this.composerRepo.delete(id);
 
-    if (result.affected === 0) {
-      throw new NotFoundException(`Composer not found`);
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException(`Composer not found`);
+    // }
 
     return { message: `Composer removed successfully` };
   }

@@ -210,9 +210,9 @@ export class UserService {
       is_banned,
     });
 
-    if (result.affected === 0) {
-      throw new NotFoundException("User not found or nothing was updated");
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException("User not found or nothing was updated");
+    // }
 
     return { message: `Updated successfully` };
   }

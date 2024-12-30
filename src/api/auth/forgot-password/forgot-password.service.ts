@@ -25,7 +25,8 @@ export class ForgotPasswordService {
     }
 
     // Get reset link
-    const resetLink = `https://groove-puce.vercel.app/reset-password/` + resetToken;
+    const resetLink =
+      `https://groove-puce.vercel.app/reset-password/` + resetToken;
     // const resetLink =
     //   `${req.protocol}://${req.get("host")}/reset-password/` + resetToken;
 
@@ -44,9 +45,9 @@ export class ForgotPasswordService {
       { reset_token: resetToken, reset_token_expired: tokenExpireTime }
     );
 
-    if (result.affected === 0) {
-      throw new NotFoundException("User not found");
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException("User not found");
+    // }
 
     return {
       message: "Password reset email sent successfully.",

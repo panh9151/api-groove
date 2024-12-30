@@ -65,9 +65,9 @@ export class CommentService {
     if (comment.length !== 1) throw new NotFoundException("Comment not found");
 
     const result = await this.commentRepo.delete({ id_comment, id_user });
-    if (result.affected === 0) {
-      throw new NotFoundException(`Comment not found`);
-    }
+    // if (result.affected === 0) {
+    //   throw new NotFoundException(`Comment not found`);
+    // }
     return { message: `Comment removed successfully` };
   }
 
