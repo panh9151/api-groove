@@ -133,6 +133,20 @@ export class MusicService {
       });
     }
 
+    // Add lyric
+    if (body?.lyrics && body?.lyrics?.length > 0) {
+      body.lyrics.map(async (lyrics) => {
+        const newLyrics = this.lyricsRepo.create({
+          id_music: saveMusic.id_music,
+          start_time: lyrics.start_time,
+          end_time: lyrics.end_time,
+          lyrics: lyrics.lyrics,
+        });
+
+        await this.lyricsRepo.save(newLyrics);
+      });
+    }
+
     return { newID: saveMusic.id_music };
   }
 
@@ -242,8 +256,6 @@ export class MusicService {
   async findOne(id: string, req: any) {
     const musicRepo = this.musicRepository
       .createQueryBuilder("music")
-      .leftJoinAndSelect("music.musicHistories", "mh") // Join bảng lịch sử nghe nhạc (music history)
-      .leftJoinAndSelect("music.favoriteMusics", "fm") // Join bảng yêu thích (favorite music)
       .leftJoinAndSelect("music.artists", "mad") // Join bảng quan hệ nhiều-nhiều giữa music và artist
       .leftJoinAndSelect("mad.artist", "a") // Join bảng nghệ sĩ (artist)
       .leftJoinAndSelect("music.types", "mtd") // Join bảng quan hệ nhiều-nhiều giữa music và type
@@ -257,8 +269,8 @@ export class MusicService {
     // Get data
     const music: any = await musicRepo.getOne();
     if (!music) throw new NotFoundException("Music not found");
-    music.favorite = music.favoriteMusics ? music.favoriteMusics.length : null;
-    music.view = music.musicHistories ? music.musicHistories.length : null;
+    music.view = await this.historyRepo.count({ where: { id_music: id } });
+    music.favorite = await this.favoriteRepo.count({ where: { id_music: id } });
     music.composer = music?.id_composer?.name ? music.id_composer?.name : null;
     music.id_composer = music?.id_composer?.id_composer
       ? music.id_composer?.id_composer
@@ -370,6 +382,21 @@ export class MusicService {
         });
 
         await this.musicTypeRepo.save(newType);
+      });
+    }
+
+    // Add lyric
+    await this.lyricsRepo.delete({ id_music: id });
+    if (body?.lyrics && body?.lyrics?.length > 0) {
+      body.lyrics.map(async (lyrics) => {
+        const newLyrics = this.lyricsRepo.create({
+          id_music: id,
+          start_time: lyrics.start_time,
+          end_time: lyrics.end_time,
+          lyrics: lyrics.lyrics,
+        });
+
+        await this.lyricsRepo.save(newLyrics);
       });
     }
 

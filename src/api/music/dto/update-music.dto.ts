@@ -5,15 +5,28 @@ import {
   IsDate,
   IsEnum,
   IsInt,
+  IsNumber,
   IsOptional,
   IsString,
   IsUrl,
   Length,
+  ValidateNested,
 } from "class-validator";
 
 export enum ShowStatus {
   HIDDEN = 0,
   VISIBLE = 1,
+}
+
+class LyricDto {
+  @IsNumber()
+  start_time: number;
+
+  @IsNumber()
+  end_time: number;
+
+  @IsString()
+  lyrics: string;
 }
 
 export class UpdateMusicDto {
@@ -110,4 +123,10 @@ export class UpdateMusicDto {
     required: false,
   })
   types = [];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => LyricDto)
+  @IsOptional()
+  lyrics: LyricDto[];
 }
