@@ -233,10 +233,12 @@ export class MusicService {
       .getRawMany();
 
     musics = musics.map((music) => {
-      music.favorite =
-        favorites.find((item) => item.id_music === music.id_music)?.views || 0;
-      music.view =
-        views.find((item) => item.id_music === music.id_music)?.views || 0;
+      music.favorite = Number(
+        favorites.find((item) => item.id_music === music.id_music)?.views
+      );
+      music.view = Number(
+        views.find((item) => item.id_music === music.id_music)?.views
+      );
 
       // music.favorite = music.favorite.views;
       // music.view = music.favorite.views;
