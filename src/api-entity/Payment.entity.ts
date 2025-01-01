@@ -23,6 +23,11 @@ export class PaymentEntity {
   @Column()
   created_at: string;
 
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
+    onUpdate: "CURRENT_TIMESTAMP",
+  })
   @Column()
   last_update: string;
 
