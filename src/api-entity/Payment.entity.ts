@@ -6,17 +6,26 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity("Bill")
-export class Bill {
+@Entity("Payment")
+export class PaymentEntity {
   @PrimaryGeneratedColumn("uuid")
-  id_bill: string;
+  id_payment: string;
 
   @Column()
-  id_music: string;
+  vip_code: string;
 
   @Column()
-  update_at: string;
+  method: string;
+
+  @Column()
+  amount: number;
 
   @Column()
   created_at: string;
+
+  @Column()
+  last_update: string;
+
+  @Column()
+  status: string;
 }

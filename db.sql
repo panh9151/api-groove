@@ -43,6 +43,8 @@ DROP TABLE IF EXISTS Type;
 
 DROP TABLE IF EXISTS Artist;
 
+DROP TABLE IF EXISTS Payment;
+
 DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
@@ -62,8 +64,19 @@ CREATE TABLE User (
     id_google varchar(255),
     reset_token VARCHAR(255),
     reset_token_expired bigint(20),
-    vip_code varchar(36) default uuid(),
+    vip_code varchar(36) unique default uuid(),
     is_vip tinyint(1) default 0
+);
+
+CREATE TABLE Payment (
+    id_payment VARCHAR(36) DEFAULT UUID() NOT NULL PRIMARY KEY,
+    vip_code varchar(36) not null,
+    method varchar(255) not null,
+    amount float not null,
+    created_at DATETIME not null default CURRENT_TIMESTAMP,
+    last_update DATETIME not null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+    status enum("paid", "pending", "cancel") default "pending",
+    FOREIGN KEY (vip_code) REFERENCES User(vip_code) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE Artist (
@@ -370,7 +383,8 @@ INSERT INTO
         created_at,
         last_update,
         is_banned,
-        is_vip
+        is_vip,
+        vip_code
     )
 VALUES
     (
@@ -387,7 +401,8 @@ VALUES
         "2024-08-17 15:11:11",
         "2024-08-17 15:11:11",
         0,
-        1
+        1,
+        "vip_user_code"
     );
 
 insert into
@@ -25451,3 +25466,7 @@ insert into MusicHistory (id_music_history, id_user, id_music, play_duration, cr
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('b3d6789e-7ff8-430e-a245-34cf25349898', 'u0050', 'm0011', 53, '2023-12-07 10:36:06');
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('e06b7807-76d9-49ec-a701-3581a4f62c29', 'u0010', 'm0003', 599, '2024-11-24 19:50:15');
 insert into MusicHistory (id_music_history, id_user, id_music, play_duration, created_at) values ('e5f34eb8-e7fe-48e0-aad9-c4e4aeaa2244', null, 'm0024', 594, '2024-01-31 12:53:48');
+
+INSERT INTO Payment (id_payment, vip_code, method, amount, status)
+VALUES 
+    (UUID(), 'vip_user_code', 'momo', 20000, "paid");

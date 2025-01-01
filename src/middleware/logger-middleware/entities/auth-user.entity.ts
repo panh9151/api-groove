@@ -49,4 +49,7 @@ export class AuthUser {
 
   @Column()
   reset_token_expired: string;
+
+  @Column()
+  vip_code: string;
 }

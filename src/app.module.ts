@@ -36,6 +36,8 @@ import { CommentModule } from "./api/comment/comment.module";
 import { TopTypeModule } from "./api/top-type/top-type.module";
 import { NotificationModule } from "./api/notification/notification.module";
 // import { CompletePaymentModule } from './api/complete-payment/complete-payment.module';
+import { PaymentModule } from "./api/payment/payment.module";
+import { PaymentModule as PaymentAuthModule } from "./api/auth/payment/payment.module";
 
 @Module({
   imports: [
@@ -93,6 +95,8 @@ import { NotificationModule } from "./api/notification/notification.module";
     CommentModule,
     TopTypeModule,
     NotificationModule,
+    PaymentAuthModule,
+    PaymentModule,
     // CompletePaymentModule,
   ],
   controllers: [AppController],
