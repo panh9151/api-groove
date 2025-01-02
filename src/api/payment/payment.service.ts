@@ -39,4 +39,24 @@ export class PaymentService {
 
     return { success: "Updated successfully" };
   }
+
+  async getChart() {
+    const allHistory = await this.paymentRepo
+      .createQueryBuilder("payment")
+      .andWhere("payment.created_at >= NOW() - INTERVAL 30 DAY")
+      .andWhere("payment.created_at < NOW()")
+      .getMany();
+
+    const result = allHistory.reduce((acc, item) => {
+      const day = new Date(item.created_at).toISOString().split("T")[0]; // Extract date part in YYYY-MM-DD format
+      acc[day] = (acc[day] || 0) + (item?.status === "paid" && item?.amount);
+      return acc;
+    }, {});
+
+    return { data: result };
+
+    const formattedResult = Object.entries(result)
+      .map(([day, view]) => ({ day, view }))
+      .sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime()); // Simplified sorting
+  }
 }

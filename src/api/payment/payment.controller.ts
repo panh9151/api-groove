@@ -34,4 +34,10 @@ export class PaymentController {
   update(@Param("id") id: string, @Body() updatePaymentDto: UpdatePaymentDto) {
     return this.paymentService.update(id, updatePaymentDto);
   }
+
+  @UseGuards(AdminGuard)
+  @Get("chart")
+  getChart() {
+    return this.paymentService.getChart();
+  }
 }
