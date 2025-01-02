@@ -53,10 +53,10 @@ export class PaymentService {
       return acc;
     }, {});
 
-    return { data: result };
-
     const formattedResult = Object.entries(result)
-      .map(([day, view]) => ({ day, view }))
+      .map(([day, revenue]) => ({ day, revenue }))
       .sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime()); // Simplified sorting
+
+    return { data: formattedResult };
   }
 }
