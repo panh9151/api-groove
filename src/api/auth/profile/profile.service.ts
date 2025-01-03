@@ -25,7 +25,6 @@ export class ProfileService {
         "user.created_at",
         "user.last_update",
         "user.is_vip",
-        "user.vip_code",
       ])
       .andWhere("user.id_user = :id_user", { id_user: req.user.id_user })
       .getOne();

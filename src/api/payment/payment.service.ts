@@ -12,10 +12,12 @@ export class PaymentService {
     private readonly paymentRepo: Repository<PaymentEntity>
   ) {}
 
-  async create(body: CreatePaymentDto) {
-    const newPayment = this.paymentRepo.create(body);
+  async create(body: CreatePaymentDto, req: any) {
+    const newPayment = this.paymentRepo.create({
+      ...body,
+      id_user: req?.user?.id_user,
+    });
     const savedType = await this.paymentRepo.save(newPayment);
-
     return { newID: savedType.id_payment };
   }
 

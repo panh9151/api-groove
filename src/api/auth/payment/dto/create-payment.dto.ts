@@ -6,9 +6,4 @@ export class CreatePaymentDto {
 
   @IsNumber()
   amount: number;
-
-  @IsEnum(["paid", "pending", "cancel"], {
-    message: "Role must be paid, unpaid, or cancel",
-  })
-  status: string;
 }

@@ -23,9 +23,6 @@ export class User {
   @Column()
   is_vip: number;
 
-  @Column()
-  vip_code: number;
-
   @Column({ type: "varchar", length: 255 })
   fullname: string;
 

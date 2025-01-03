@@ -12,7 +12,7 @@ export class PaymentEntity {
   id_payment: string;
 
   @Column()
-  vip_code: string;
+  id_user: string;
 
   @Column()
   method: string;

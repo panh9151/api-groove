@@ -45,7 +45,4 @@ export class Profile {
 
   @Column()
   is_vip: string;
-
-  @Column()
-  vip_code: string;
 }
