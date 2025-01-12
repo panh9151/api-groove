@@ -115,4 +115,6 @@ export class UpdateUserDto {
     required: false,
   })
   is_banned: 0 | 1 = 0;
+
+  is_vip: 1 | 0;
 }

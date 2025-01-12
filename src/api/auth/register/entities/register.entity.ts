@@ -13,4 +13,7 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @Column()
+  is_vip: 0 | 1;
 }

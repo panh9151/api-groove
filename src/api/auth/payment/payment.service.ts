@@ -38,11 +38,16 @@ export class PaymentService {
     Object.assign(existingPayment, body);
     await this.paymentRepo.save(existingPayment);
 
+    // Xử lý khi status là "paid"
     if (body?.status === "paid") {
       const user = await this.userRepo.findOne({
         where: { id_user: req?.user?.id_user },
       });
-      Object.assign(user, { is_vip: 1 });
+      if (!user) {
+        throw new NotFoundException("User not found");
+      }
+
+      user.is_vip = 1; // Trực tiếp gán thay vì Object.assign
       await this.userRepo.save(user);
     }
 
