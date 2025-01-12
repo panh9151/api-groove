@@ -1,3 +1,4 @@
+import { UserGuard } from "./../../guard/user/user.guard";
 import {
   Controller,
   Get,
@@ -168,7 +169,7 @@ export class UserController {
 
   ///////////////////////////////////////////////////////////////////////////////
   @Patch(":id")
-  @UseGuards(AdminGuard)
+  @UseGuards(UserGuard)
   @ApiOperation({ summary: "Sửa user - Yêu cầu admin" })
   @ApiBody({ type: UpdateUserDto })
   @ApiResponse({

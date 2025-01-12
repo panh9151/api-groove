@@ -38,6 +38,8 @@ import { NotificationModule } from "./api/notification/notification.module";
 // import { CompletePaymentModule } from './api/complete-payment/complete-payment.module';
 import { PaymentModule } from "./api/payment/payment.module";
 import { PaymentModule as PaymentAuthModule } from "./api/auth/payment/payment.module";
+import { ignoreLogger } from "vnpay";
+import { VnpayModule } from "nestjs-vnpay";
 
 @Module({
   imports: [
@@ -65,6 +67,28 @@ import { PaymentModule as PaymentAuthModule } from "./api/auth/payment/payment.m
       database: process.env.DB_NAME,
       entities: [__dirname + "/../**/*.entity.{js,ts}"],
       synchronize: false,
+    }),
+    VnpayModule.register({
+      tmnCode: "RF7NRGDR",
+      secureSecret: "E794M73JC4SAUMML2H39RKWEGM6D2OTE",
+      vnpayHost: "https://sandbox.vnpayment.vn",
+      testMode: true, // tùy chọn, ghi đè vnpayHost thành sandbox nếu là true
+      hashAlgorithm: "SHA512" as any, // tùy chọn
+
+      /**
+       * Sử dụng enableLog để bật/tắt logger
+       * Nếu enableLog là false, loggerFn sẽ không được sử dụng trong bất kỳ phương thức nào
+       */
+      enableLog: true, // tùy chọn
+
+      /**
+       * Hàm `loggerFn` sẽ được gọi để ghi log
+       * Mặc định, loggerFn sẽ ghi log ra console
+       * Bạn có thể ghi đè loggerFn để ghi log ra nơi khác
+       *
+       * `ignoreLogger` là một hàm không làm gì cả
+       */
+      loggerFn: ignoreLogger, // tùy chọn
     }),
     TypeOrmModule.forFeature([AuthUser]),
     TypeModule,

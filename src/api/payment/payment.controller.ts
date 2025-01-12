@@ -1,3 +1,4 @@
+import { UserGuard } from "./../../guard/user/user.guard";
 import { AdminGuard } from "./../../guard/admin/admin.guard";
 import {
   Controller,
@@ -18,13 +19,19 @@ import { UpdatePaymentDto } from "./dto/update-payment.dto";
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(UserGuard)
   @Get()
   findAll() {
     return this.paymentService.findAll();
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(UserGuard)
+  @Post(":id")
+  post(@Body() body: CreatePaymentDto, @Request() req: any) {
+    return this.paymentService.create(body, req);
+  }
+
+  @UseGuards(UserGuard)
   @Patch(":id")
   update(@Param("id") id: string, @Body() updatePaymentDto: UpdatePaymentDto) {
     return this.paymentService.update(id, updatePaymentDto);
