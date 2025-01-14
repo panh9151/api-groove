@@ -75,7 +75,7 @@ Chi tiết thanh toán:
 
 Với gói VIP, bạn sẽ được tận hưởng nhiều tính năng cao cấp và độc quyền, giúp trải nghiệm âm nhạc của bạn thêm phong phú.
 
-Nếu bạn có bất kỳ thắc mắc nào hoặc cần hỗ trợ, vui lòng liên hệ với đội ngũ hỗ trợ của chúng tôi qua zalo: (+84)794 437 748.
+Nếu bạn có bất kỳ thắc mắc nào hoặc cần hỗ trợ, vui lòng liên hệ với đội ngũ hỗ trợ của chúng tôi qua zalo: (+84) 794 437 748.
 
 Cảm ơn bạn đã tin tưởng và đồng hành cùng Groove!
 
