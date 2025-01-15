@@ -69,7 +69,7 @@ export class PaymentService {
 Chúc mừng bạn đã nâng cấp thành công gói VIP của Groove!
 
 Chi tiết thanh toán:
-- Gói thanh toán: 200.000 VND
+- Gói thanh toán: 20.000 VND
 - Thời gian thanh toán: ${paymentTime}
 - Mã giao dịch: ${existingPayment?.id_payment}
 
